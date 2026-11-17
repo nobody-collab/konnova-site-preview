@@ -3,11 +3,15 @@
  * (задел под будущую админку).
  *
  * Для показа заказчику флаги можно переключать прямо в адресе:
- *   ?salesOpen=1&bookReleased=1&ironReleased=1&accent=7B3A3E
+ *   ?salesOpen=1&bookReleased=1&ironReleased=1&accent=9C5B5B&italic=0
  */
 window.SITE_CONFIG = {
-  // Акцентный цвет (кнопки и курсивные слова). Варианты из макета: #9C5B5B, #A87268, #B0806F, #7B3A3E
-  accent: '#9C5B5B',
+  // Акцентный цвет (кнопки и акцентные слова). Сейчас бордовый; прежний розово-коричневый — #9C5B5B.
+  accent: '#7B3A3E',
+
+  // Курсивные акценты в заголовках и цифрах: true — как в макете, false — прямое начертание.
+  // Для сравнения можно переключить из адреса: ?italic=0
+  italic: true,
 
   // false — открыта предзапись на марафон; true — открыты продажи
   salesOpen: false,
@@ -26,7 +30,7 @@ window.SITE_CONFIG = {
       text: '5 дней, чтобы познакомиться с системой и получить первые результаты.',
       badge: { flag: 'salesOpen', on: 'Продажи открыты', off: 'Предзапись' },
       href: '#marathon',
-      tone: '#EAD8CD',
+      tone: '#EADECD',
       img: '',
       alt: '',
       photo: 'Фото: лёгкость, движение'
@@ -37,7 +41,7 @@ window.SITE_CONFIG = {
       text: '2 месяца сопровождения для стабильного результата и новых привычек.',
       badge: 'После марафона',
       href: '#marathon',
-      tone: '#E4D0C3',
+      tone: '#E4D7C3',
       img: '',
       alt: '',
       photo: 'Фото: с бутылкой воды'
@@ -48,7 +52,7 @@ window.SITE_CONFIG = {
       text: 'Не очередная диета. Новые отношения с едой и собственным телом.',
       badge: { flag: 'bookReleased', on: 'Уже в продаже', off: 'Скоро' },
       href: '#book',
-      tone: '#EFE0D6',
+      tone: '#EFE5D6',
       img: '',
       alt: '',
       photo: 'Фото: с книгой'
@@ -59,7 +63,7 @@ window.SITE_CONFIG = {
       text: 'Знания и рабочие решения для энергии, красивых волос и хорошего самочувствия.',
       badge: { flag: 'ironReleased', on: 'Железо в продаже', off: 'Январь' },
       href: '#iron',
-      tone: '#E0CBBE',
+      tone: '#E0D2BE',
       img: '',
       alt: '',
       photo: 'Фото: продукт'
@@ -70,13 +74,13 @@ window.SITE_CONFIG = {
   // type: 'reel' | 'tip' — подпись в углу карточки; img — обложка (пока пусто).
   // Карточки с type 'tip' — примеры для показа, тексты нужно заменить на реальные посты.
   reels: [
-    { type: 'reel', title: 'Попкорн полезнее салата?', sub: 'Разбор в супермаркете', tone: '#E8D4C8', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { type: 'tip', title: 'Белок в каждый приём пищи', sub: 'Полезный совет', tone: '#F1E4DB', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { type: 'reel', title: 'Бюджетный белок', sub: 'Не хуже стейка', tone: '#E2CDBF', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { type: 'tip', title: 'Сон и аппетит', sub: 'Полезный совет', tone: '#EADFD2', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { type: 'reel', title: 'Правило 3-3-3', sub: 'Простое правило похудения', tone: '#EBDAD0', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { type: 'tip', title: 'Как читать состав', sub: 'Полезный совет', tone: '#F1E4DB', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { type: 'reel', title: 'Волосы — маркер здоровья', sub: 'Что они говорят о питании', tone: '#DECABD', href: 'https://www.instagram.com/katy_konnova/', img: '' }
+    { type: 'reel', title: 'Попкорн полезнее салата?', sub: 'Разбор в супермаркете', tone: '#E8DBC8', href: 'https://www.instagram.com/katy_konnova/', img: '' },
+    { type: 'tip', title: 'Белок в каждый приём пищи', sub: 'Полезный совет', tone: '#F1E8DB', href: 'https://www.instagram.com/katy_konnova/', img: '' },
+    { type: 'reel', title: 'Бюджетный белок', sub: 'Не хуже стейка', tone: '#E2D4BF', href: 'https://www.instagram.com/katy_konnova/', img: '' },
+    { type: 'tip', title: 'Сон и аппетит', sub: 'Полезный совет', tone: '#EAE0D2', href: 'https://www.instagram.com/katy_konnova/', img: '' },
+    { type: 'reel', title: 'Правило 3-3-3', sub: 'Простое правило похудения', tone: '#EBE0D0', href: 'https://www.instagram.com/katy_konnova/', img: '' },
+    { type: 'tip', title: 'Как читать состав', sub: 'Полезный совет', tone: '#F1E8DB', href: 'https://www.instagram.com/katy_konnova/', img: '' },
+    { type: 'reel', title: 'Волосы — маркер здоровья', sub: 'Что они говорят о питании', tone: '#DED1BD', href: 'https://www.instagram.com/katy_konnova/', img: '' }
   ],
 
   // Добавки. Каждая запись — отдельный блок в разделе «Добавки»; чтобы добавить

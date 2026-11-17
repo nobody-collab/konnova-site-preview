@@ -26,6 +26,8 @@
 
   var root = document.documentElement;
   if (cfg.accent) { root.style.setProperty('--accent', cfg.accent); }
+  var italic = params.has('italic') ? /^(1|true)$/.test(params.get('italic')) : cfg.italic !== false;
+  root.classList.toggle('kk-no-italic', !italic);
   root.style.setProperty('--book-opacity', cfg.bookReleased ? '1' : '0.5');
 
   // <div data-if="salesOpen"> / data-if="!salesOpen" — лишние ветки убираем из DOM
@@ -62,16 +64,16 @@
     projectsEl.innerHTML = (cfg.projects || []).map(function (p, i) {
       var href = p.href || '#';
       return '' +
-        '<a href="' + esc(href) + '"' + linkAttrs(href) + ' class="kk-lift ' + STAGGER[Math.min(i, 3)] + '" style="display: flex; flex-direction: column; gap: 16px; padding: 12px 12px 22px; border-radius: 28px; background: #FFFFFF; color: #4A3C36; text-decoration: none">' +
-        '<div class="kk-unveil" style="position: relative; overflow: hidden; aspect-ratio: 4 / 5; border-radius: 20px; background: ' + esc(p.tone || '#EAD8CD') + '; display: flex; align-items: flex-end; padding: 14px; box-sizing: border-box">' +
+        '<a href="' + esc(href) + '"' + linkAttrs(href) + ' class="kk-lift ' + STAGGER[Math.min(i, 3)] + '" style="display: flex; flex-direction: column; gap: 16px; padding: 12px 12px 22px; border-radius: 28px; background: #FFFFFF; color: #4A3F36; text-decoration: none">' +
+        '<div class="kk-unveil" style="position: relative; overflow: hidden; aspect-ratio: 4 / 5; border-radius: 20px; background: ' + esc(p.tone || '#EADECD') + '; display: flex; align-items: flex-end; padding: 14px; box-sizing: border-box">' +
         (p.img ? '<img src="' + esc(p.img) + '" alt="' + esc(p.alt) + '" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 20px; display: block">' : '') +
-        '<span class="kk-glass" style="position: absolute; top: 14px; left: 14px; color: #4A3C36; border-radius: 999px; padding: 6px 13px; font-size: 12px; font-weight: 600">' + esc(badgeText(p.badge)) + '</span>' +
+        '<span class="kk-glass" style="position: absolute; top: 14px; left: 14px; color: #4A3F36; border-radius: 999px; padding: 6px 13px; font-size: 12px; font-weight: 600">' + esc(badgeText(p.badge)) + '</span>' +
         '<span style="font-family: ' + SERIF + '; font-size: 44px; font-style: italic; line-height: 1; color: rgba(255,255,255,0.85); position: absolute; right: 16px; top: 10px">' + esc(p.num) + '</span>' +
-        (p.img ? '' : '<span style="color: #6E5F58; font-size: 12px; font-weight: 500">' + esc(p.photo) + '</span>') +
+        (p.img ? '' : '<span style="color: #6E6258; font-size: 12px; font-weight: 500">' + esc(p.photo) + '</span>') +
         '</div>' +
         '<div style="padding: 0 10px; display: flex; flex-direction: column; gap: 8px; flex-grow: 1">' +
-        '<span style="font-family: ' + SERIF + '; font-size: 28px; font-weight: 500; line-height: 1.05; color: #3F322D">' + esc(p.title) + '</span>' +
-        '<span style="font-size: 15px; line-height: 1.6; color: #6E5F58; flex-grow: 1">' + esc(p.text) + '</span>' +
+        '<span style="font-family: ' + SERIF + '; font-size: 28px; font-weight: 500; line-height: 1.05; color: #3F352D">' + esc(p.title) + '</span>' +
+        '<span style="font-size: 15px; line-height: 1.6; color: #6E6258; flex-grow: 1">' + esc(p.text) + '</span>' +
         '<span style="font-size: 14px; font-weight: 600; color: var(--accent)">Подробнее →</span>' +
         '</div>' +
         '</a>';
@@ -81,10 +83,10 @@
   /* ---------- «Добавки»: по блоку на каждую запись из config.js ---------- */
   var suppEl = $('supplements');
   if (suppEl) {
-    var SUPP_TPL = "<div id=\"{{ID}}\" class=\"kk-supp\" style=\"max-width: 1240px; margin: 0 auto; padding: 104px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 56px; align-items: center\">\n<div class=\"kk-left\" style=\"position: relative; display: flex; flex-direction: column; gap: 20px\">\n<p style=\"margin: 0; display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #9C8378\"><span aria-hidden=\"true\" style=\"width: 36px; height: 1px; background: #CDB3A5\"></span>Добавка · {{STATUS}}</p>\n<h2 style=\"margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(34px, 9.2vw, 52px); line-height: 1.05; color: #3F322D\">{{TITLE}} <span style=\"font-style: italic; color: var(--accent)\">{{ACCENT}}</span></h2>\n<p style=\"margin: 0; font-size: 17px; line-height: 1.7; color: #6E5F58; max-width: 520px\">{{LEAD}}</p>\n<div style=\"display: grid; grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); gap: 10px\">\n{{FACTS}}\n</div>\n<div style=\"display: flex; flex-wrap: wrap; gap: 10px\">\n<a href=\"{{CTAHREF}}\"{{CTAATTR}} style=\"display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 28px; box-sizing: border-box; border-radius: 28px; background: var(--accent); color: #FFFFFF; text-decoration: none; font-weight: 600\">{{CTA}}</a>\n{{SECONDARY}}\n</div>\n<p style=\"margin: 0; font-size: 13px; line-height: 1.55; color: #9C8378\">{{NOTE}}</p>\n</div>\n<div class=\"kk-right kk-prod-stage\" style=\"{{ORDER}}position: relative; min-height: 460px; display: flex; align-items: center; justify-content: center\">\n<div aria-hidden=\"true\" style=\"position: absolute; right: 6%; bottom: 4%; width: 320px; height: 280px; border-radius: 999px; background: #E3CFC0; filter: blur(56px); opacity: 0.8\"></div>\n<div aria-hidden=\"true\" style=\"position: absolute; width: 430px; max-width: 96%; aspect-ratio: 1 / 1; border-radius: 999px; border: 1px dashed #D9C3B6\"></div>\n<div class=\"kk-glass\" style=\"position: relative; width: 340px; max-width: 78%; aspect-ratio: 1 / 1; border-radius: 999px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden\">\n<div aria-hidden=\"true\" style=\"position: absolute; bottom: 0; width: 100%; height: 34%; background: #EADBD0\"></div>\n<div style=\"position: relative; margin-bottom: 22%; width: 46%; aspect-ratio: 5 / 7; opacity: {{OPACITY}}; display: flex; flex-direction: column; box-shadow: 0 22px 40px rgba(122,86,74,0.2); border-radius: 22px 22px 18px 18px\">\n<span aria-hidden=\"true\" style=\"height: 17%; border-radius: 14px 14px 4px 4px; background: #D8BBA6; margin: 0 6%\"></span>\n<span style=\"flex-grow: 1; border-radius: 16px 16px 18px 18px; background: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px\"><span style=\"font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: #7A6A62\">{{BRAND}}</span><span style=\"font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 7vw, 34px); font-style: italic; color: #4A3C36\">{{LABEL}}</span><span aria-hidden=\"true\" style=\"width: 28px; height: 1px; background: #CDB3A5\"></span></span>\n</div>\n</div>\n{{PILL0}}\n{{PILL1}}\n</div>\n</div>";
-    var FACT_TPL = "<div class=\"kk-glass\" style=\"border-radius: 22px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px\"><span style=\"font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; line-height: 1.1; color: #3F322D\">{{T}}</span><span style=\"font-size: 14px; line-height: 1.55; color: #6E5F58\">{{D}}</span></div>";
+    var SUPP_TPL = "<div id=\"{{ID}}\" class=\"kk-supp\" style=\"max-width: 1240px; margin: 0 auto; padding: 104px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 56px; align-items: center\">\n<div class=\"kk-left\" style=\"position: relative; display: flex; flex-direction: column; gap: 20px\">\n<p style=\"margin: 0; display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #9C8878\"><span aria-hidden=\"true\" style=\"width: 36px; height: 1px; background: #CDBDA5\"></span>Добавка · {{STATUS}}</p>\n<h2 style=\"margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(34px, 9.2vw, 52px); line-height: 1.05; color: #3F352D\">{{TITLE}} <span style=\"font-style: italic; color: var(--accent)\">{{ACCENT}}</span></h2>\n<p style=\"margin: 0; font-size: 17px; line-height: 1.7; color: #6E6258; max-width: 520px\">{{LEAD}}</p>\n<div style=\"display: grid; grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); gap: 10px\">\n{{FACTS}}\n</div>\n<div style=\"display: flex; flex-wrap: wrap; gap: 10px\">\n<a href=\"{{CTAHREF}}\"{{CTAATTR}} style=\"display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 28px; box-sizing: border-box; border-radius: 28px; background: var(--accent); color: #FFFFFF; text-decoration: none; font-weight: 600\">{{CTA}}</a>\n{{SECONDARY}}\n</div>\n<p style=\"margin: 0; font-size: 13px; line-height: 1.55; color: #9C8878\">{{NOTE}}</p>\n</div>\n<div class=\"kk-right kk-prod-stage\" style=\"{{ORDER}}position: relative; min-height: 460px; display: flex; align-items: center; justify-content: center\">\n<div aria-hidden=\"true\" style=\"position: absolute; right: 6%; bottom: 4%; width: 320px; height: 280px; border-radius: 999px; background: #E3D5C0; filter: blur(56px); opacity: 0.8\"></div>\n<div aria-hidden=\"true\" style=\"position: absolute; width: 430px; max-width: 96%; aspect-ratio: 1 / 1; border-radius: 999px; border: 1px dashed #D9CBB6\"></div>\n<div class=\"kk-glass\" style=\"position: relative; width: 340px; max-width: 78%; aspect-ratio: 1 / 1; border-radius: 999px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden\">\n<div aria-hidden=\"true\" style=\"position: absolute; bottom: 0; width: 100%; height: 34%; background: #EAE0D0\"></div>\n<div style=\"position: relative; margin-bottom: 22%; width: 46%; aspect-ratio: 5 / 7; opacity: {{OPACITY}}; display: flex; flex-direction: column; box-shadow: 0 22px 40px rgba(122,86,74,0.2); border-radius: 22px 22px 18px 18px\">\n<span aria-hidden=\"true\" style=\"height: 17%; border-radius: 14px 14px 4px 4px; background: #D8C4A6; margin: 0 6%\"></span>\n<span style=\"flex-grow: 1; border-radius: 16px 16px 18px 18px; background: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px\"><span style=\"font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: #7A6D62\">{{BRAND}}</span><span style=\"font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 7vw, 34px); font-style: italic; color: #4A3F36\">{{LABEL}}</span><span aria-hidden=\"true\" style=\"width: 28px; height: 1px; background: #CDBDA5\"></span></span>\n</div>\n</div>\n{{PILL0}}\n{{PILL1}}\n</div>\n</div>";
+    var FACT_TPL = "<div class=\"kk-glass\" style=\"border-radius: 22px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px\"><span style=\"font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; line-height: 1.1; color: #3F352D\">{{T}}</span><span style=\"font-size: 14px; line-height: 1.55; color: #6E6258\">{{D}}</span></div>";
     var SECOND_TPL = "<a href=\"{{H}}\"{{A}} style=\"display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 24px; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-weight: 600\">{{T}} <span aria-hidden=\"true\">→</span></a>";
-    var PILL_TPL = ["<span class=\"kk-pill kk-bob1 kk-glass\" style=\"position: absolute; left: 2%; top: 16%; border-radius: 999px; padding: 10px 22px; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: #4A3C36\">{{T}}</span>", "<span class=\"kk-pill kk-bob4 kk-glass\" style=\"position: absolute; right: 0; bottom: 14%; border-radius: 999px; padding: 10px 22px; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: #4A3C36\">{{T}}</span>"];
+    var PILL_TPL = ["<span class=\"kk-pill kk-bob1 kk-glass\" style=\"position: absolute; left: 2%; top: 16%; border-radius: 999px; padding: 10px 22px; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: #4A3F36\">{{T}}</span>", "<span class=\"kk-pill kk-bob4 kk-glass\" style=\"position: absolute; right: 0; bottom: 14%; border-radius: 999px; padding: 10px 22px; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: #4A3F36\">{{T}}</span>"];
     var fill = function (tpl, map) {
       return tpl.replace(/\{\{(\w+)\}\}/g, function (_, key) { return map[key] == null ? '' : map[key]; });
     };
@@ -122,16 +124,16 @@
       var href = r.href || 'https://www.instagram.com/katy_konnova/';
       var type = TYPES[r.type] ? r.type : 'reel';
       return '' +
-        '<a href="' + esc(href) + '"' + linkAttrs(href) + ' class="kk-car-card" style="background: ' + esc(r.tone || '#E8D4C8') + '">' +
+        '<a href="' + esc(href) + '"' + linkAttrs(href) + ' class="kk-car-card" style="background: ' + esc(r.tone || '#E8DBC8') + '">' +
         (r.img ? '<img src="' + esc(r.img) + '" alt="" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block">' : '') +
         '<span style="position: relative; display: flex; justify-content: space-between; align-items: center">' +
         '<span class="kk-glass" style="border-radius: 999px; padding: 6px 13px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent)">' + TYPES[type] + '</span>' +
         (type === 'reel' ? '<span class="kk-glass" aria-hidden="true" style="width: 44px; height: 44px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="16" height="16" fill="var(--accent)"><path d="M8 5.5v13l10.5-6.5z"></path></svg></span>' : '') +
         '</span>' +
-        (r.img ? '' : '<span style="font-size: 12px; color: #6E5F58; text-align: center">Обложка</span>') +
+        (r.img ? '' : '<span style="font-size: 12px; color: #6E6258; text-align: center">Обложка</span>') +
         '<span class="kk-glass" style="position: relative; border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">' +
         '<span style="font-family: ' + SERIF + '; font-size: 23px; font-weight: 500; line-height: 1.1">' + esc(r.title) + '</span>' +
-        '<span style="font-size: 13px; color: #6E5F58">' + esc(r.sub) + '</span>' +
+        '<span style="font-size: 13px; color: #6E6258">' + esc(r.sub) + '</span>' +
         '</span>' +
         '</a>';
     }).join('');
@@ -192,7 +194,7 @@
       a.setAttribute('aria-label', (i + 1) + '. ' + s[1]);
       a.style.cssText = 'position: relative; display: flex; align-items: center; justify-content: center; width: 20px; height: 26px';
       var dot = document.createElement('span');
-      dot.style.cssText = 'display: block; width: 7px; height: 7px; border-radius: 999px; background: #D9C3B6; box-shadow: 0 0 0 3px #FBF7F3; transition: height .5s cubic-bezier(.2,.7,.2,1), background .5s ease';
+      dot.style.cssText = 'display: block; width: 7px; height: 7px; border-radius: 999px; background: #D9CBB6; box-shadow: 0 0 0 3px #FBF8F3; transition: height .5s cubic-bezier(.2,.7,.2,1), background .5s ease';
       a.appendChild(dot);
       railEl.appendChild(a);
       return { link: a, dot: dot };
@@ -207,7 +209,7 @@
         var on = i === idx;
         d.link.setAttribute('aria-current', on ? 'true' : 'false');
         d.dot.style.height = on ? '26px' : '7px';
-        d.dot.style.background = on ? 'var(--accent)' : '#D9C3B6';
+        d.dot.style.background = on ? 'var(--accent)' : '#D9CBB6';
       });
       numEl.textContent = (idx + 1 < 10 ? '0' : '') + (idx + 1);
       labelEl.textContent = sections[idx][1];
@@ -236,7 +238,7 @@
     var answers = {};
 
     var stepLink = function (href, label, primary) {
-      return '<a href="' + esc(href || '#iron-test') + '"' + linkAttrs(href || '') + ' style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 6px 22px; border-radius: 18px; background: ' + (primary ? 'var(--accent)' : '#FFFFFF') + '; color: ' + (primary ? '#FFFFFF' : '#4A3C36') + '; text-decoration: none; font-family: ' + SERIF + '; font-size: 21px; font-weight: 500">' + esc(label) +
+      return '<a href="' + esc(href || '#iron-test') + '"' + linkAttrs(href || '') + ' style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 6px 22px; border-radius: 18px; background: ' + (primary ? 'var(--accent)' : '#FFFFFF') + '; color: ' + (primary ? '#FFFFFF' : '#4A3F36') + '; text-decoration: none; font-family: ' + SERIF + '; font-size: 21px; font-weight: 500">' + esc(label) +
         ' <span aria-hidden="true" style="font-family: \'Manrope\', sans-serif; font-size: 16px' + (primary ? '' : '; color: var(--accent)') + '">→</span></a>';
     };
 
@@ -244,12 +246,12 @@
       '<div data-part="form" style="display: flex; flex-direction: column; gap: 16px">' +
       '<div style="display: flex; align-items: center; gap: 12px">' +
       '<span data-part="count" aria-live="polite" style="font-family: ' + SERIF + '; font-size: 20px; font-style: italic; color: var(--accent); white-space: nowrap"></span>' +
-      '<div style="flex-grow: 1; height: 3px; border-radius: 999px; background: #EFE4DB; overflow: hidden"><div data-part="bar" style="height: 100%; width: 0%; background: var(--accent); border-radius: 999px; transition: width .6s cubic-bezier(.2,.7,.2,1)"></div></div>' +
+      '<div style="flex-grow: 1; height: 3px; border-radius: 999px; background: #EFE7DB; overflow: hidden"><div data-part="bar" style="height: 100%; width: 0%; background: var(--accent); border-radius: 999px; transition: width .6s cubic-bezier(.2,.7,.2,1)"></div></div>' +
       '</div>' +
       questions.map(function (text, i) {
         return '' +
-          '<div role="group" aria-label="' + esc(text) + '" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 14px 0; border-top: 1px solid #EFE4DB">' +
-          '<span style="font-family: ' + SERIF + '; font-size: 22px; font-weight: 500; line-height: 1.25; color: #3F322D; flex: 1 1 260px">' + esc(text) + '</span>' +
+          '<div role="group" aria-label="' + esc(text) + '" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 14px 0; border-top: 1px solid #EFE7DB">' +
+          '<span style="font-family: ' + SERIF + '; font-size: 22px; font-weight: 500; line-height: 1.25; color: #3F352D; flex: 1 1 260px">' + esc(text) + '</span>' +
           '<div style="display: flex; gap: 8px">' +
           '<button type="button" class="kk-yn" data-q="' + i + '" data-a="1" aria-pressed="false">Да</button>' +
           '<button type="button" class="kk-yn" data-q="' + i + '" data-a="0" aria-pressed="false">Нет</button>' +
@@ -258,15 +260,15 @@
       }).join('') +
       '</div>' +
       '<div data-part="result" tabindex="-1" hidden style="display: flex; flex-direction: column; gap: 14px; outline: none">' +
-      '<span data-part="score" style="font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #9C8378"></span>' +
-      '<span data-part="title" style="font-family: ' + SERIF + '; font-size: 38px; font-weight: 500; line-height: 1.1; color: #3F322D"></span>' +
-      '<span data-part="text" style="font-size: 16px; line-height: 1.7; color: #6E5F58"></span>' +
+      '<span data-part="score" style="font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #9C8878"></span>' +
+      '<span data-part="title" style="font-family: ' + SERIF + '; font-size: 38px; font-weight: 500; line-height: 1.1; color: #3F352D"></span>' +
+      '<span data-part="text" style="font-size: 16px; line-height: 1.7; color: #6E6258"></span>' +
       '<div style="display: flex; flex-direction: column; gap: 10px; padding-top: 6px">' +
       stepLink(links.analyses, 'Какие анализы сдать', false) +
       stepLink(links.video, 'Видео: почему важно железо', false) +
       stepLink(links.buy || '#iron', texts.ironCta, true) +
       '</div>' +
-      '<button type="button" data-part="reset" style="align-self: flex-start; min-height: 44px; padding: 0 4px; border: none; background: transparent; color: #7A6A62; font-family: \'Manrope\', sans-serif; font-weight: 500; font-size: 14px; text-decoration: underline; text-underline-offset: 4px; cursor: pointer">Пройти заново</button>' +
+      '<button type="button" data-part="reset" style="align-self: flex-start; min-height: 44px; padding: 0 4px; border: none; background: transparent; color: #7A6D62; font-family: \'Manrope\', sans-serif; font-weight: 500; font-size: 14px; text-decoration: underline; text-underline-offset: 4px; cursor: pointer">Пройти заново</button>' +
       '</div>';
 
     var part = function (name) { return testEl.querySelector('[data-part="' + name + '"]'); };
@@ -325,7 +327,7 @@
           return '<button type="button" class="kk-chip" data-q="' + i + '" aria-pressed="false">' + esc(text) + '</button>';
         }).join('') +
         '</div>' +
-        '<span style="font-size: 13px; line-height: 1.55; color: #9C8378">Отметьте, что про вас, — ответы «Да» в тесте проставятся сами.</span>';
+        '<span style="font-size: 13px; line-height: 1.55; color: #9C8878">Отметьте, что про вас, — ответы «Да» в тесте проставятся сами.</span>';
       symEl.addEventListener('click', function (e) {
         var chip = e.target.closest('.kk-chip');
         if (!chip) { return; }
