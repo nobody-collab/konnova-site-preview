@@ -232,6 +232,7 @@
     var formEl = part('form');
     var resultEl = part('result');
 
+    var symEl = $('kk-symptoms');
     var update = function () {
       var answered = 0, score = 0;
       for (var i = 0; i < total; i++) {
@@ -243,6 +244,11 @@
         var isYes = btn.getAttribute('data-a') === '1';
         btn.setAttribute('aria-pressed', (isYes ? a === true : a === false) ? 'true' : 'false');
       });
+      if (symEl) {
+        symEl.querySelectorAll('.kk-chip').forEach(function (chip) {
+          chip.setAttribute('aria-pressed', answers[chip.getAttribute('data-q')] === true ? 'true' : 'false');
+        });
+      }
       part('count').textContent = answered + ' из ' + total;
       part('bar').style.width = Math.round(answered / total * 100) + '%';
 
@@ -268,6 +274,26 @@
       }
     };
 
+    /* Плитки «Знакомо?»: нажатие отмечает «Да» в вопросе с тем же номером */
+    var symptoms = (test.symptoms || []).slice(0, total);
+    if (symEl && symptoms.length) {
+      symEl.innerHTML = '' +
+        '<span style="font-family: ' + SERIF + '; font-size: 26px; font-style: italic; color: var(--accent)">Знакомо?</span>' +
+        '<div role="group" aria-label="Знакомые симптомы" style="display: flex; flex-wrap: wrap; gap: 8px">' +
+        symptoms.map(function (text, i) {
+          return '<button type="button" class="kk-chip" data-q="' + i + '" aria-pressed="false">' + esc(text) + '</button>';
+        }).join('') +
+        '</div>' +
+        '<span style="font-size: 13px; line-height: 1.55; color: #9C8378">Отметьте, что про вас, — ответы «Да» в тесте проставятся сами.</span>';
+      symEl.addEventListener('click', function (e) {
+        var chip = e.target.closest('.kk-chip');
+        if (!chip) { return; }
+        var q = chip.getAttribute('data-q');
+        if (answers[q] === true) { delete answers[q]; } else { answers[q] = true; }
+        update();
+      });
+    }
+
     testEl.addEventListener('click', function (e) {
       var btn = e.target.closest('button');
       if (!btn) { return; }
@@ -280,5 +306,106 @@
       }
     });
     update();
+  }
+  /* ---------- «Результаты»: лента историй со стрелками ---------- */
+  var resEl = $('kk-results');
+  if (resEl && resEl.children.length) {
+    var resBtns = [].slice.call(document.querySelectorAll('[data-results]'));
+    var resState = function () {
+      var max = resEl.scrollWidth - resEl.clientWidth;
+      resBtns.forEach(function (b) {
+        var dir = Number(b.getAttribute('data-results'));
+        b.disabled = dir < 0 ? resEl.scrollLeft <= 2 : resEl.scrollLeft >= max - 2;
+      });
+    };
+    var resGo = function (dir) {
+      var step = resEl.children.length > 1 ? resEl.children[1].offsetLeft - resEl.children[0].offsetLeft : resEl.clientWidth;
+      var perPage = Math.max(1, Math.round(resEl.clientWidth / step));
+      resEl.scrollBy({ left: dir * step * perPage, behavior: 'smooth' });
+    };
+    resBtns.forEach(function (b) {
+      b.addEventListener('click', function () { resGo(Number(b.getAttribute('data-results'))); });
+    });
+    resEl.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); resGo(-1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); resGo(1); }
+    });
+    var resTick = false;
+    resEl.addEventListener('scroll', function () {
+      if (resTick) { return; }
+      resTick = true;
+      setTimeout(function () { resTick = false; resState(); }, 80);
+    }, { passive: true });
+    window.addEventListener('resize', resState);
+    resState();
+  }
+
+  /* ---------- Появление при скролле ---------- */
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasIO = 'IntersectionObserver' in window;
+
+  /* Заголовки h2 выезжают построчно. Слова оборачиваются в маски; номер строки
+     считается в момент появления, поэтому перенос на любой ширине учитывается. */
+  if (!reduced && hasIO) {
+    var wrapWords = function (node) {
+      [].slice.call(node.childNodes).forEach(function (child) {
+        if (child.nodeType === 1) { wrapWords(child); return; }
+        if (child.nodeType !== 3 || !/\S/.test(child.nodeValue)) { return; }
+        var frag = document.createDocumentFragment();
+        child.nodeValue.split(/(\s+)/).forEach(function (piece) {
+          if (!piece) { return; }
+          if (/^\s+$/.test(piece)) { frag.appendChild(document.createTextNode(' ')); return; }
+          var outer = document.createElement('span');
+          outer.className = 'kk-w';
+          var inner = document.createElement('span');
+          inner.textContent = piece;
+          outer.appendChild(inner);
+          frag.appendChild(outer);
+        });
+        node.replaceChild(frag, child);
+      });
+    };
+    var headIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) { return; }
+        var line = -1, lastTop = null;
+        [].forEach.call(en.target.querySelectorAll('.kk-w'), function (w) {
+          if (lastTop === null || Math.abs(w.offsetTop - lastTop) > 4) { line++; lastTop = w.offsetTop; }
+          w.firstChild.style.transitionDelay = (line * 0.13) + 's';
+        });
+        en.target.classList.add('is-in');
+        headIO.unobserve(en.target);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.3 });
+    [].forEach.call(document.querySelectorAll('h2'), function (h) {
+      wrapWords(h);
+      h.classList.add('kk-split');
+      headIO.observe(h);
+    });
+  }
+
+  /* Запасной вариант для браузеров без animation-timeline (Firefox): те же анимации
+     появления, но запускаются один раз, когда блок входит в экран. ?nosda=1 — для проверки. */
+  var noSDA = document.documentElement.classList.contains('kk-no-sda'); // ставится скриптом в <head>
+  if (noSDA && !hasIO) { document.documentElement.classList.remove('kk-no-sda'); }
+  if (noSDA && !reduced && hasIO) {
+    var seenIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('kk-seen'); seenIO.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    [].forEach.call(document.querySelectorAll('.kk-reveal,.kk-s2,.kk-s3,.kk-s4,.kk-blur,.kk-left,.kk-right,.kk-zoom,.kk-unveil,.kk-ln'), function (el) {
+      // линии иконок — части SVG: наблюдаем за самим <svg>
+      seenIO.observe(el.classList.contains('kk-ln') ? (el.closest('svg') || el) : el);
+    });
+    var bar = document.querySelector('.kk-progress');
+    if (bar) {
+      var grow = function () {
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.transform = 'scaleY(' + (max > 0 ? Math.min(1, Math.max(0.02, window.scrollY / max)) : 1) + ')';
+      };
+      window.addEventListener('scroll', grow, { passive: true });
+      grow();
+    }
   }
 })();

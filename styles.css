@@ -124,3 +124,37 @@ html{scroll-behavior:smooth}
   .kk-car-btn[data-dir="-1"]{left:10px}.kk-car-btn[data-dir="1"]{right:10px}
 }
 @media (prefers-reduced-motion: reduce){.kk-car-card,.kk-car-btn{transition:none}}
+
+/* ---------- «Знакомо?»: плитки-симптомы перед тестом ---------- */
+.kk-chip{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid #E3D3C8;background:#FFFFFF;color:#4A3C36;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;cursor:pointer;transition:background .35s ease,color .35s ease,border-color .35s ease,translate .4s cubic-bezier(.2,.7,.2,1)}
+.kk-chip:hover{translate:0 -2px;border-color:var(--accent)}
+.kk-chip[aria-pressed="true"]{background:var(--accent);color:#FFFFFF;border-color:var(--accent)}
+
+/* ---------- «Результаты»: лента историй ---------- */
+.kk-res-track{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;padding:10px 0 34px;margin:-10px 0 -34px;outline-offset:4px}
+.kk-res-track::-webkit-scrollbar{display:none}
+.kk-res-card{flex:0 0 calc((100% - 36px)/3);scroll-snap-align:start;box-sizing:border-box}
+.kk-res-btn{transition:opacity .3s ease}
+.kk-res-btn:disabled{opacity:.38;cursor:default}
+@media (max-width:960px){.kk-res-card{flex-basis:calc((100% - 18px)/2)}}
+@media (max-width:640px){.kk-res-card{flex-basis:84%}}
+
+/* ---------- Заголовки: построчное появление (слова в масках, задержка по номеру строки) ---------- */
+.kk-split .kk-w{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .06em .18em;margin:0 -.06em -.18em}
+.kk-split .kk-w>span{display:inline-block;transform:translateY(112%);transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.kk-split.is-in .kk-w>span{transform:none}
+
+/* ---------- Запасной вариант без animation-timeline (Firefox) ---------- */
+.kk-no-sda .kk-reveal,.kk-no-sda .kk-s2,.kk-no-sda .kk-s3,.kk-no-sda .kk-s4,.kk-no-sda .kk-blur,.kk-no-sda .kk-left,.kk-no-sda .kk-right,.kk-no-sda .kk-zoom,.kk-no-sda .kk-unveil{animation:kk-rise1 1s cubic-bezier(.2,.7,.2,1) both paused;animation-range:normal}
+.kk-no-sda .kk-s2{animation-name:kk-rise2;animation-delay:.08s}
+.kk-no-sda .kk-s3{animation-name:kk-rise3;animation-delay:.16s}
+.kk-no-sda .kk-s4{animation-name:kk-rise4;animation-delay:.24s}
+.kk-no-sda .kk-blur{animation-name:kk-blurin}
+.kk-no-sda .kk-left{animation-name:kk-fromleft}
+.kk-no-sda .kk-right{animation-name:kk-fromright}
+.kk-no-sda .kk-zoom{animation-name:kk-zoomin}
+.kk-no-sda .kk-unveil{animation-name:kk-unveil;animation-duration:1.4s}
+.kk-no-sda .kk-ln{stroke-dasharray:1;stroke-dashoffset:1;animation:kk-dash 1.6s cubic-bezier(.6,0,.2,1) both paused;animation-range:normal}
+.kk-no-sda .kk-drift,.kk-no-sda .kk-leaf{animation:none}
+.kk-no-sda .kk-progress{animation:none}
+.kk-no-sda .kk-seen,.kk-no-sda .kk-seen .kk-ln{animation-play-state:running}
