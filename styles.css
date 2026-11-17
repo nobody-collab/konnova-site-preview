@@ -183,3 +183,10 @@ html{scroll-behavior:smooth}
 .kk-no-italic [style*="font-style: italic"]{font-style:normal!important}
 /* Шапка и индикатор разделов проезжают над тёмными блоками — стекло плотнее, чтобы текст читался */
 .kk-header.kk-glass,.kk-rail .kk-glass{background:rgba(251,248,243,.9)}
+
+/* ---------- Шоколадный первый экран ---------- */
+.kk-hero-dark .kk-hero-art .kk-glass{background:rgba(251,248,243,.94)}
+.kk-hero-dark .kk-hero-art>[aria-hidden="true"][style*="border: 1px solid"]{border-color:rgba(255,255,255,.2)!important}
+.kk-hero-dark .kk-leaf{stroke:rgba(255,255,255,.2)}
+.kk-hero-dark h1 svg{stroke:currentColor}
+.kk-hero-dark{margin-top:-14px;padding-top:14px}
