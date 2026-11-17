@@ -1,0 +1,112 @@
+body{margin:0;background:#FBF7F3}
+a{color:var(--accent)}a:hover{color:#7B3A3E}
+html{scroll-behavior:smooth}
+@keyframes kk-rise1{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes kk-rise2{from{opacity:0;transform:translateY(48px)}to{opacity:1;transform:none}}
+@keyframes kk-rise3{from{opacity:0;transform:translateY(68px)}to{opacity:1;transform:none}}
+@keyframes kk-rise4{from{opacity:0;transform:translateY(88px)}to{opacity:1;transform:none}}
+@keyframes kk-blurin{from{opacity:0;filter:blur(10px);transform:translateY(22px)}to{opacity:1;filter:none;transform:none}}
+@keyframes kk-fromleft{from{opacity:0;transform:translateX(-70px)}to{opacity:1;transform:none}}
+@keyframes kk-fromright{from{opacity:0;transform:translateX(70px)}to{opacity:1;transform:none}}
+@keyframes kk-zoomin{from{opacity:0;transform:scale(.93)}to{opacity:1;transform:none}}
+@keyframes kk-unveil{from{clip-path:inset(14% 10% 14% 10% round 40px);transform:scale(1.05)}to{clip-path:inset(0 0 0 0 round 32px);transform:none}}
+@keyframes kk-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes kk-drift{from{transform:translateY(26px)}to{transform:translateY(-26px)}}
+@keyframes kk-driftrot{from{transform:translateY(40px) rotate(-8deg)}to{transform:translateY(-40px) rotate(6deg)}}
+@keyframes kk-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes kk-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes kk-spin{to{transform:rotate(360deg)}}
+@keyframes kk-dash{to{stroke-dashoffset:0}}
+@keyframes kk-grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.kk-load{animation:kk-in 1.2s cubic-bezier(.2,.7,.2,1) both}
+.kk-d1{animation-delay:.15s}.kk-d2{animation-delay:.3s}.kk-d3{animation-delay:.45s}.kk-d4{animation-delay:.65s}
+.kk-marquee{animation:kk-marquee 42s linear infinite}
+.kk-spin{animation:kk-spin 28s linear infinite}
+.kk-draw{stroke-dasharray:520;stroke-dashoffset:520;animation:kk-dash 1.8s .9s cubic-bezier(.6,0,.2,1) forwards}
+.kk-bob1{animation:kk-bob 6s ease-in-out infinite}
+.kk-bob2{animation:kk-bob 7s ease-in-out infinite;animation-delay:-2s}
+.kk-bob3{animation:kk-bob 8s ease-in-out infinite;animation-delay:-4s}
+.kk-bob4{animation:kk-bob 6.5s ease-in-out infinite;animation-delay:-3s}
+.kk-glass{background:linear-gradient(135deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,.22) 48%,rgba(255,255,255,.36) 100%);-webkit-backdrop-filter:blur(22px) saturate(175%);backdrop-filter:blur(22px) saturate(175%);border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 1px rgba(255,255,255,.3),inset 0 0 18px rgba(255,255,255,.18),0 12px 34px rgba(122,86,74,.13)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.kk-glass{background:rgba(251,247,243,.94)}}
+.kk-lift{transition:translate .6s cubic-bezier(.2,.7,.2,1),box-shadow .6s ease}
+.kk-lift:hover{translate:0 -6px;box-shadow:0 18px 40px rgba(122,86,74,.12)}
+.kk-nav a{transition:color .3s ease}.kk-nav a:hover{color:var(--accent)}
+.kk-rail{display:none}
+@media (min-width:960px){.kk-rail{display:flex}}
+.kk-progress{transform-origin:top;transform:scaleY(.08)}
+@supports (animation-timeline: view()){
+.kk-reveal,.kk-s2,.kk-s3,.kk-s4,.kk-blur,.kk-left,.kk-right,.kk-zoom,.kk-unveil{animation-timing-function:cubic-bezier(.2,.7,.2,1);animation-fill-mode:both;animation-timeline:view();animation-range:entry 0% entry 100%}
+.kk-reveal{animation-name:kk-rise1}
+.kk-s2{animation-name:kk-rise2}
+.kk-s3{animation-name:kk-rise3}
+.kk-s4{animation-name:kk-rise4}
+.kk-blur{animation-name:kk-blurin}
+.kk-left{animation-name:kk-fromleft}
+.kk-right{animation-name:kk-fromright}
+.kk-zoom{animation-name:kk-zoomin}
+.kk-unveil{animation-name:kk-unveil;animation-range:entry 0% cover 45%}
+.kk-drift{animation:kk-drift linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
+.kk-leaf{animation:kk-driftrot linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
+}
+@supports (animation-timeline: view()){
+.kk-ln{stroke-dasharray:1;stroke-dashoffset:1;animation:kk-dash linear both;animation-timeline:view();animation-range:entry 0% entry 100%}
+}
+@supports (animation-timeline: scroll()){
+.kk-progress{animation:kk-grow linear both;animation-timeline:scroll(root)}
+}
+@media (prefers-reduced-motion: reduce){.kk-load,.kk-marquee,.kk-spin,.kk-bob1,.kk-bob2,.kk-bob3,.kk-bob4,.kk-reveal,.kk-s2,.kk-s3,.kk-s4,.kk-blur,.kk-left,.kk-right,.kk-zoom,.kk-unveil,.kk-drift,.kk-leaf{animation:none!important}.kk-draw,.kk-ln{animation:none!important;stroke-dashoffset:0}.kk-lift{transition:none}}
+
+/* ---------- Переменные (accent переопределяется из config.js) ---------- */
+:root{--accent:#9C5B5B}
+
+/* ---------- Тест на железо: кнопки Да / Нет ---------- */
+.kk-yn{min-width:66px;min-height:44px;border-radius:999px;border:1px solid #E3D3C8;background:#FFFFFF;color:#4A3C36;font-family:'Manrope',sans-serif;font-weight:500;font-size:15px;cursor:pointer;transition:background .35s ease,color .35s ease,border-color .35s ease}
+.kk-yn[aria-pressed="true"]{background:var(--accent);color:#FFFFFF;border-color:var(--accent)}
+.kk-yn:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+#kk-test [hidden]{display:none!important}
+
+/* ---------- Адаптив. Макет рисовался под 1440; правила ниже только для узких экранов ---------- */
+@media (max-width:860px){
+  .kk-header nav{display:none!important}
+}
+@media (max-width:775px){
+  /* «Обо мне»: колонки складываются, карточка заходит на фото снизу, а не сбоку */
+  #about{display:block!important;max-width:560px!important;padding-top:88px!important;padding-bottom:88px!important}
+  .kk-about-card{margin:-56px 14px 0!important;padding:36px 28px!important}
+}
+@media (max-width:640px){
+  .kk-header{padding:6px 6px 6px 18px!important;flex-wrap:nowrap!important;gap:8px!important}
+  .kk-logo{font-size:21px!important;white-space:nowrap}
+  .kk-header-cta{min-height:40px!important;padding:0 14px!important;font-size:13px!important;white-space:nowrap}
+
+  section[id],#marathon>div,#reels>div,#system>div,#iron-test>div{scroll-margin-top:70px}
+  #projects,#results,#readers,#marathon>div,#reels>div,#system>div,#iron-test>div{padding-top:72px!important;padding-bottom:72px!important}
+
+  /* первый экран: плавающие карточки остаются в пределах экрана */
+  .kk-hero-art{width:calc(100% - 76px)!important}
+  .kk-hero-art>.kk-leaf{display:none}
+  .kk-hero-art>.kk-drift{padding:11px 16px!important;border-radius:20px!important}
+  .kk-hero-art>.kk-drift>span:first-child{font-size:27px!important}
+  .kk-hero-art>.kk-drift:nth-of-type(4){left:-34px!important;top:16%!important}
+  .kk-hero-art>.kk-drift:nth-of-type(5){right:-32px!important;bottom:30%!important}
+  .kk-about-card>div:last-child{gap:0 32px!important}
+
+  /* «Моя система»: плашки компактнее и разнесены по углам */
+  .kk-plate-stage{min-height:430px!important}
+  .kk-pill{font-size:17px!important;padding:7px 15px!important;white-space:nowrap}
+  .kk-pill.kk-bob1{left:0!important;top:2%!important}
+  .kk-pill.kk-bob2{right:0!important;top:12%!important}
+  .kk-pill.kk-bob3{left:0!important;bottom:11%!important}
+  .kk-pill.kk-bob4{right:0!important;bottom:1%!important}
+
+  .kk-cta-box{padding:30px 24px!important}
+  .kk-readers-box{padding:48px 22px!important;border-radius:32px!important}
+  #book,#iron{padding:28px 24px!important}
+  #kk-test{padding:22px 20px!important}
+
+  /* «Разборы»: горизонтальная лента вместо четырёх высоких карточек подряд */
+  #kk-reels{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -24px;padding:0 24px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  #kk-reels::-webkit-scrollbar{display:none}
+  #kk-reels>a{flex:0 0 66%;scroll-snap-align:center;animation:none!important}
+}
