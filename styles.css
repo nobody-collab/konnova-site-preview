@@ -102,7 +102,8 @@ html{scroll-behavior:smooth}
 
   .kk-cta-box{padding:30px 24px!important}
   .kk-readers-box{padding:48px 22px!important;border-radius:32px!important}
-  #book,#iron{padding:28px 24px!important}
+  #book>div,#iron>div{padding-top:72px!important;padding-bottom:72px!important;gap:36px!important}
+  .kk-prod-stage{min-height:400px!important}
   #kk-test{padding:22px 20px!important}
 }
 
