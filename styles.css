@@ -104,9 +104,23 @@ html{scroll-behavior:smooth}
   .kk-readers-box{padding:48px 22px!important;border-radius:32px!important}
   #book,#iron{padding:28px 24px!important}
   #kk-test{padding:22px 20px!important}
-
-  /* «Разборы»: горизонтальная лента вместо четырёх высоких карточек подряд */
-  #kk-reels{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -24px;padding:0 24px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  #kk-reels::-webkit-scrollbar{display:none}
-  #kk-reels>a{flex:0 0 66%;scroll-snap-align:center;animation:none!important}
 }
+
+/* ---------- «Разборы»: карусель с увеличенной центральной карточкой ---------- */
+.kk-carousel{position:relative;--card:clamp(210px,21vw,260px)}
+.kk-car-track{position:relative;display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:34px calc(50% - var(--card)/2) 64px;margin-bottom:-30px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;outline-offset:-2px}
+.kk-car-track::-webkit-scrollbar{display:none}
+.kk-car-card{position:relative;flex:0 0 var(--card);scroll-snap-align:center;display:flex;flex-direction:column;justify-content:space-between;aspect-ratio:9/16;border-radius:26px;overflow:hidden;padding:16px;box-sizing:border-box;text-decoration:none;color:#3F322D;transform:scale(.9);opacity:.72;transition:transform .6s cubic-bezier(.2,.7,.2,1),opacity .6s ease,box-shadow .6s ease}
+.kk-car-card:hover{color:#3F322D}
+.kk-car-card.is-active{transform:scale(1.1);opacity:1;box-shadow:0 22px 46px rgba(122,86,74,.18);z-index:1}
+.kk-car-btn{position:absolute;top:50%;z-index:2;width:48px;height:48px;margin-top:-24px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:translate .4s cubic-bezier(.2,.7,.2,1)}
+.kk-car-btn[data-dir="-1"]{left:0}.kk-car-btn[data-dir="1"]{right:0}
+.kk-car-btn:hover{translate:0 -3px}
+@media (max-width:640px){
+  .kk-carousel{--card:62vw;margin:0 -24px}
+  .kk-car-track{gap:14px;padding-top:26px}
+  .kk-car-card.is-active{transform:scale(1.06)}
+  .kk-car-btn{width:42px;height:42px;margin-top:-21px}
+  .kk-car-btn[data-dir="-1"]{left:10px}.kk-car-btn[data-dir="1"]{right:10px}
+}
+@media (prefers-reduced-motion: reduce){.kk-car-card,.kk-car-btn{transition:none}}

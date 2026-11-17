@@ -66,12 +66,17 @@ window.SITE_CONFIG = {
     }
   ],
 
-  // Карточки «Разборы» (рилсы). img — обложка, пока пусто.
+  // Карусель «Разборы»: рилсы, советы и рецепты вперемешку.
+  // type: 'reel' | 'tip' | 'recipe' — подпись в углу карточки; img — обложка (пока пусто).
+  // Карточки с type 'tip' и 'recipe' — примеры для показа, тексты нужно заменить на реальные посты.
   reels: [
-    { title: 'Попкорн полезнее салата?', sub: 'Разбор в супермаркете', tone: '#E8D4C8', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { title: 'Бюджетный белок', sub: 'Не хуже стейка', tone: '#E2CDBF', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { title: 'Правило 3-3-3', sub: 'Простое правило похудения', tone: '#EBDAD0', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { title: 'Волосы — маркер здоровья', sub: 'Что они говорят о питании', tone: '#DECABD', href: 'https://www.instagram.com/katy_konnova/', img: '' }
+    { type: 'reel', title: 'Попкорн полезнее салата?', sub: 'Разбор в супермаркете', tone: '#E8D4C8', href: 'https://www.instagram.com/katy_konnova/', img: '' },
+    { type: 'tip', title: 'Белок в каждый приём пищи', sub: 'Полезный совет', tone: '#F1E4DB', href: 'https://www.instagram.com/katy_konnova/', img: '' },
+    { type: 'reel', title: 'Бюджетный белок', sub: 'Не хуже стейка', tone: '#E2CDBF', href: 'https://www.instagram.com/katy_konnova/', img: '' },
+    { type: 'recipe', title: 'Завтрак за 10 минут', sub: 'Рецепт по тарелке', tone: '#EADFD2', href: 'https://www.instagram.com/katy_konnova/', img: '' },
+    { type: 'reel', title: 'Правило 3-3-3', sub: 'Простое правило похудения', tone: '#EBDAD0', href: 'https://www.instagram.com/katy_konnova/', img: '' },
+    { type: 'tip', title: 'Как читать состав', sub: 'Полезный совет', tone: '#F1E4DB', href: 'https://www.instagram.com/katy_konnova/', img: '' },
+    { type: 'reel', title: 'Волосы — маркер здоровья', sub: 'Что они говорят о питании', tone: '#DECABD', href: 'https://www.instagram.com/katy_konnova/', img: '' }
   ],
 
   // Блок «Железо» и тест

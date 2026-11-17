@@ -204,7 +204,10 @@
 </div>
 <a target="_blank" rel="noopener" href="https://www.instagram.com/katy_konnova/" style="display: inline-flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 24px; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-weight: 600; font-size: 15px">@katy_konnova →</a>
 </div>
-<div id="kk-reels" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px">
+<div class="kk-carousel kk-reveal">
+<button type="button" class="kk-car-btn kk-glass" data-dir="-1" aria-label="Предыдущая карточка"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div id="kk-reels" class="kk-car-track" tabindex="0" aria-label="Разборы, советы и рецепты"></div>
+<button type="button" class="kk-car-btn kk-glass" data-dir="1" aria-label="Следующая карточка"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
 </div>
 </div>
 </section>

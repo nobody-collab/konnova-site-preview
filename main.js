@@ -73,22 +73,68 @@
     }).join('');
   }
 
-  /* ---------- «Разборы» ---------- */
+  /* ---------- «Разборы»: карусель (рилсы, советы, рецепты) ---------- */
   var reelsEl = $('kk-reels');
   if (reelsEl) {
-    reelsEl.innerHTML = (cfg.reels || []).map(function (r, i) {
+    var TYPES = { reel: 'Рилс', tip: 'Совет', recipe: 'Рецепт' };
+    reelsEl.innerHTML = (cfg.reels || []).map(function (r) {
       var href = r.href || 'https://www.instagram.com/katy_konnova/';
+      var type = TYPES[r.type] ? r.type : 'reel';
       return '' +
-        '<a href="' + esc(href) + '"' + linkAttrs(href) + ' class="kk-lift ' + STAGGER[Math.min(i, 3)] + '" style="position: relative; display: flex; flex-direction: column; justify-content: space-between; aspect-ratio: 9 / 16; border-radius: 26px; overflow: hidden; background: ' + esc(r.tone || '#E8D4C8') + '; padding: 16px; box-sizing: border-box; text-decoration: none; color: #3F322D">' +
+        '<a href="' + esc(href) + '"' + linkAttrs(href) + ' class="kk-car-card" style="background: ' + esc(r.tone || '#E8D4C8') + '">' +
         (r.img ? '<img src="' + esc(r.img) + '" alt="" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block">' : '') +
-        '<span class="kk-glass" aria-hidden="true" style="position: relative; align-self: flex-end; width: 44px; height: 44px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="16" height="16" fill="var(--accent)"><path d="M8 5.5v13l10.5-6.5z"></path></svg></span>' +
-        (r.img ? '' : '<span style="font-size: 12px; color: #6E5F58; text-align: center">Обложка рилса</span>') +
+        '<span style="position: relative; display: flex; justify-content: space-between; align-items: center">' +
+        '<span class="kk-glass" style="border-radius: 999px; padding: 6px 13px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent)">' + TYPES[type] + '</span>' +
+        (type === 'reel' ? '<span class="kk-glass" aria-hidden="true" style="width: 44px; height: 44px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="16" height="16" fill="var(--accent)"><path d="M8 5.5v13l10.5-6.5z"></path></svg></span>' : '') +
+        '</span>' +
+        (r.img ? '' : '<span style="font-size: 12px; color: #6E5F58; text-align: center">Обложка</span>') +
         '<span class="kk-glass" style="position: relative; border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">' +
         '<span style="font-family: ' + SERIF + '; font-size: 23px; font-weight: 500; line-height: 1.1">' + esc(r.title) + '</span>' +
         '<span style="font-size: 13px; color: #6E5F58">' + esc(r.sub) + '</span>' +
         '</span>' +
         '</a>';
     }).join('');
+
+    var cards = [].slice.call(reelsEl.children);
+    var active = -1;
+    var centerOf = function (c) { return c.offsetLeft + c.offsetWidth / 2; };
+    var nearest = function () {
+      var mid = reelsEl.scrollLeft + reelsEl.clientWidth / 2, best = 0, bd = Infinity;
+      cards.forEach(function (c, i) { var d = Math.abs(centerOf(c) - mid); if (d < bd) { bd = d; best = i; } });
+      return best;
+    };
+    var mark = function () {
+      var n = nearest();
+      if (n === active) return;
+      active = n;
+      cards.forEach(function (c, i) { c.classList.toggle('is-active', i === n); });
+    };
+    var go = function (i, instant) {
+      i = Math.max(0, Math.min(cards.length - 1, i));
+      reelsEl.scrollTo({ left: centerOf(cards[i]) - reelsEl.clientWidth / 2, behavior: instant ? 'instant' : 'smooth' });
+    };
+    if (cards.length) {
+      var ticking = false;
+      reelsEl.addEventListener('scroll', function () {
+        if (ticking) return;
+        ticking = true;
+        setTimeout(function () { ticking = false; mark(); }, 60);
+      }, { passive: true });
+      window.addEventListener('resize', function () { go(active < 0 ? 0 : active, true); mark(); });
+      // клик по боковой карточке сначала выводит её в центр, по центральной — открывает ссылку
+      cards.forEach(function (c, i) {
+        c.addEventListener('click', function (e) { if (i !== active) { e.preventDefault(); go(i); } });
+      });
+      reelsEl.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); go(active - 1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); go(active + 1); }
+      });
+      [].forEach.call(document.querySelectorAll('.kk-car-btn'), function (b) {
+        b.addEventListener('click', function () { go(active + Number(b.getAttribute('data-dir'))); });
+      });
+      go(Math.floor((cards.length - 1) / 2), true);
+      mark();
+    }
   }
 
   /* ---------- Индикатор разделов справа (scroll-spy) ---------- */
