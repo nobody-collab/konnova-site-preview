@@ -102,7 +102,8 @@ html{scroll-behavior:smooth}
 
   .kk-cta-box{padding:30px 24px!important}
   .kk-readers-box{padding:48px 22px!important;border-radius:32px!important}
-  #book>div,#iron>div{padding-top:72px!important;padding-bottom:72px!important;gap:36px!important}
+  #book>div,.kk-supp{padding-top:72px!important;padding-bottom:72px!important;gap:36px!important}
+  .kk-supp .kk-prod-stage{order:0!important}
   .kk-prod-stage{min-height:400px!important}
   #kk-test{padding:22px 20px!important}
 }
@@ -159,3 +160,7 @@ html{scroll-behavior:smooth}
 .kk-no-sda .kk-drift,.kk-no-sda .kk-leaf{animation:none}
 .kk-no-sda .kk-progress{animation:none}
 .kk-no-sda .kk-seen,.kk-no-sda .kk-seen .kk-ln{animation-play-state:running}
+
+/* ---------- «Добавки»: блоки из config.js ---------- */
+.kk-supp{scroll-margin-top:90px}
+.kk-supp+.kk-supp{padding-top:0!important}

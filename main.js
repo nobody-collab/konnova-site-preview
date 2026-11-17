@@ -27,7 +27,6 @@
   var root = document.documentElement;
   if (cfg.accent) { root.style.setProperty('--accent', cfg.accent); }
   root.style.setProperty('--book-opacity', cfg.bookReleased ? '1' : '0.5');
-  root.style.setProperty('--iron-opacity', cfg.ironReleased ? '1' : '0.55');
 
   // <div data-if="salesOpen"> / data-if="!salesOpen" — лишние ветки убираем из DOM
   document.querySelectorAll('[data-if]').forEach(function (el) {
@@ -37,10 +36,16 @@
     if (negate ? value : !value) { el.remove(); }
   });
 
-  var iron = cfg.iron || {};
+  /* Добавки: список в config.js. released берётся из флага (flag) или из поля released. */
+  var supplements = (cfg.supplements || []).map(function (p) {
+    var out = {};
+    for (var k in p) { out[k] = p[k]; }
+    out.isOut = p.flag ? !!cfg[p.flag] : !!p.released;
+    return out;
+  });
+  var ironSupp = supplements.filter(function (p) { return p.id === 'iron'; })[0] || supplements[0] || {};
   var texts = {
-    ironShort: cfg.ironReleased ? iron.shortOut : iron.shortSoon,
-    ironCta: cfg.ironReleased ? iron.ctaOut : iron.ctaSoon
+    ironCta: ironSupp.isOut ? ironSupp.ctaOut : ironSupp.ctaSoon
   };
   document.querySelectorAll('[data-text]').forEach(function (el) {
     var t = texts[el.getAttribute('data-text')];
@@ -71,6 +76,42 @@
         '</div>' +
         '</a>';
     }).join('');
+  }
+
+  /* ---------- «Добавки»: по блоку на каждую запись из config.js ---------- */
+  var suppEl = $('supplements');
+  if (suppEl) {
+    var SUPP_TPL = "<div id=\"{{ID}}\" class=\"kk-supp\" style=\"max-width: 1240px; margin: 0 auto; padding: 104px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 56px; align-items: center\">\n<div class=\"kk-left\" style=\"position: relative; display: flex; flex-direction: column; gap: 20px\">\n<p style=\"margin: 0; display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #9C8378\"><span aria-hidden=\"true\" style=\"width: 36px; height: 1px; background: #CDB3A5\"></span>Добавка · {{STATUS}}</p>\n<h2 style=\"margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(34px, 9.2vw, 52px); line-height: 1.05; color: #3F322D\">{{TITLE}} <span style=\"font-style: italic; color: var(--accent)\">{{ACCENT}}</span></h2>\n<p style=\"margin: 0; font-size: 17px; line-height: 1.7; color: #6E5F58; max-width: 520px\">{{LEAD}}</p>\n<div style=\"display: grid; grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); gap: 10px\">\n{{FACTS}}\n</div>\n<div style=\"display: flex; flex-wrap: wrap; gap: 10px\">\n<a href=\"{{CTAHREF}}\"{{CTAATTR}} style=\"display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 28px; box-sizing: border-box; border-radius: 28px; background: var(--accent); color: #FFFFFF; text-decoration: none; font-weight: 600\">{{CTA}}</a>\n{{SECONDARY}}\n</div>\n<p style=\"margin: 0; font-size: 13px; line-height: 1.55; color: #9C8378\">{{NOTE}}</p>\n</div>\n<div class=\"kk-right kk-prod-stage\" style=\"{{ORDER}}position: relative; min-height: 460px; display: flex; align-items: center; justify-content: center\">\n<div aria-hidden=\"true\" style=\"position: absolute; right: 6%; bottom: 4%; width: 320px; height: 280px; border-radius: 999px; background: #E3CFC0; filter: blur(56px); opacity: 0.8\"></div>\n<div aria-hidden=\"true\" style=\"position: absolute; width: 430px; max-width: 96%; aspect-ratio: 1 / 1; border-radius: 999px; border: 1px dashed #D9C3B6\"></div>\n<div class=\"kk-glass\" style=\"position: relative; width: 340px; max-width: 78%; aspect-ratio: 1 / 1; border-radius: 999px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden\">\n<div aria-hidden=\"true\" style=\"position: absolute; bottom: 0; width: 100%; height: 34%; background: #EADBD0\"></div>\n<div style=\"position: relative; margin-bottom: 22%; width: 46%; aspect-ratio: 5 / 7; opacity: {{OPACITY}}; display: flex; flex-direction: column; box-shadow: 0 22px 40px rgba(122,86,74,0.2); border-radius: 22px 22px 18px 18px\">\n<span aria-hidden=\"true\" style=\"height: 17%; border-radius: 14px 14px 4px 4px; background: #D8BBA6; margin: 0 6%\"></span>\n<span style=\"flex-grow: 1; border-radius: 16px 16px 18px 18px; background: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px\"><span style=\"font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: #7A6A62\">{{BRAND}}</span><span style=\"font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 7vw, 34px); font-style: italic; color: #4A3C36\">{{LABEL}}</span><span aria-hidden=\"true\" style=\"width: 28px; height: 1px; background: #CDB3A5\"></span></span>\n</div>\n</div>\n{{PILL0}}\n{{PILL1}}\n</div>\n</div>";
+    var FACT_TPL = "<div class=\"kk-glass\" style=\"border-radius: 22px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px\"><span style=\"font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; line-height: 1.1; color: #3F322D\">{{T}}</span><span style=\"font-size: 14px; line-height: 1.55; color: #6E5F58\">{{D}}</span></div>";
+    var SECOND_TPL = "<a href=\"{{H}}\"{{A}} style=\"display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 24px; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-weight: 600\">{{T}} <span aria-hidden=\"true\">→</span></a>";
+    var PILL_TPL = ["<span class=\"kk-pill kk-bob1 kk-glass\" style=\"position: absolute; left: 2%; top: 16%; border-radius: 999px; padding: 10px 22px; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: #4A3C36\">{{T}}</span>", "<span class=\"kk-pill kk-bob4 kk-glass\" style=\"position: absolute; right: 0; bottom: 14%; border-radius: 999px; padding: 10px 22px; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: #4A3C36\">{{T}}</span>"];
+    var fill = function (tpl, map) {
+      return tpl.replace(/\{\{(\w+)\}\}/g, function (_, key) { return map[key] == null ? '' : map[key]; });
+    };
+    suppEl.innerHTML = supplements.map(function (p, i) {
+      var ctaHref = (p.isOut ? p.hrefOut : p.hrefSoon) || '#readers';
+      var pills = p.pills || [];
+      var sec = p.secondary;
+      return fill(SUPP_TPL, {
+        ID: esc(p.id || 'supplement-' + (i + 1)),
+        STATUS: esc(p.isOut ? p.statusOut : p.statusSoon),
+        TITLE: esc(p.title),
+        ACCENT: esc(p.titleAccent),
+        LEAD: esc(p.lead),
+        FACTS: (p.facts || []).map(function (f) { return fill(FACT_TPL, { T: esc(f.title), D: esc(f.text) }); }).join('\n'),
+        CTAHREF: esc(ctaHref),
+        CTAATTR: linkAttrs(ctaHref),
+        CTA: esc(p.isOut ? p.ctaOut : p.ctaSoon),
+        SECONDARY: sec ? fill(SECOND_TPL, { H: esc(sec.href), A: linkAttrs(sec.href), T: esc(sec.text) }) : '',
+        NOTE: esc(p.note),
+        BRAND: esc(p.brand),
+        LABEL: esc(p.label),
+        OPACITY: p.isOut ? '1' : '0.55',
+        PILL0: pills[0] ? fill(PILL_TPL[0], { T: esc(pills[0]) }) : '',
+        PILL1: pills[1] ? fill(PILL_TPL[1], { T: esc(pills[1]) }) : '',
+        ORDER: i % 2 ? 'order: -1; ' : ''
+      });
+    }).join('\n');
   }
 
   /* ---------- «Разборы»: карусель (рилсы, советы) ---------- */
@@ -140,7 +181,7 @@
   /* ---------- Индикатор разделов справа (scroll-spy) ---------- */
   var sections = [
     ['top', 'Главная'], ['projects', 'Проекты'], ['system', 'Система'], ['about', 'Обо мне'],
-    ['marathon', 'Марафон'], ['reels', 'Разборы'], ['results', 'Результаты'], ['book', 'Книга'], ['iron', 'Добавка'],
+    ['marathon', 'Марафон'], ['reels', 'Разборы'], ['results', 'Результаты'], ['book', 'Книга'], ['supplements', 'Добавки'],
     ['iron-test', 'Тест'], ['readers', 'Читательницам']
   ];
   var railEl = $('kk-rail');
