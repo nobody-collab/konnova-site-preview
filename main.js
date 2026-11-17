@@ -73,10 +73,10 @@
     }).join('');
   }
 
-  /* ---------- «Разборы»: карусель (рилсы, советы, рецепты) ---------- */
+  /* ---------- «Разборы»: карусель (рилсы, советы) ---------- */
   var reelsEl = $('kk-reels');
   if (reelsEl) {
-    var TYPES = { reel: 'Рилс', tip: 'Совет', recipe: 'Рецепт' };
+    var TYPES = { reel: 'Рилс', tip: 'Совет' };
     reelsEl.innerHTML = (cfg.reels || []).map(function (r) {
       var href = r.href || 'https://www.instagram.com/katy_konnova/';
       var type = TYPES[r.type] ? r.type : 'reel';
