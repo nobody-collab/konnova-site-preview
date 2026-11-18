@@ -57,6 +57,65 @@
     if (/^https?:/.test(url)) { el.setAttribute('target', '_blank'); el.setAttribute('rel', 'noopener'); }
   });
 
+  /* ---------- Всплывающее окно с виджетом GetCourse ---------- */
+  var modal = null, modalLast = null, modalLoaded = {};
+  function closeModal() {
+    if (!modal || modal.hidden) { return; }
+    modal.hidden = true;
+    root.classList.remove('kk-modal-open');
+    if (modalLast) { modalLast.focus(); }
+  }
+  function openWidget(key, trigger) {
+    var w = (cfg.widgets || {})[key];
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.className = 'kk-modal';
+      modal.hidden = true;
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.innerHTML = '<div class="kk-modal-panel"><div class="kk-modal-head"><span class="kk-modal-title"></span>' +
+        '<button type="button" class="kk-modal-close" aria-label="Закрыть">×</button></div>' +
+        '<div class="kk-modal-body"></div><a class="kk-modal-alt" target="_blank" rel="noopener">Не открывается? Анкета в новой вкладке ↗</a></div>';
+      document.body.appendChild(modal);
+      modal.addEventListener('click', function (e) { if (e.target === modal || e.target.closest('.kk-modal-close')) { closeModal(); } });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeModal(); } });
+    }
+    modal.setAttribute('aria-label', w.title || '');
+    modal.querySelector('.kk-modal-title').textContent = w.title || '';
+    var alt = modal.querySelector('.kk-modal-alt');
+    var url = (cfg.links || {})[key];
+    alt.hidden = !url;
+    if (url) { alt.href = url; }
+    var body = modal.querySelector('.kk-modal-body');
+    Array.prototype.forEach.call(body.children, function (ch) { ch.hidden = ch.getAttribute('data-widget') !== key; });
+    if (!modalLoaded[key]) {
+      modalLoaded[key] = true;
+      var box = document.createElement('div');
+      box.setAttribute('data-widget', key);
+      box.className = 'kk-modal-widget';
+      body.appendChild(box);
+      var s = document.createElement('script');
+      s.id = w.id;
+      s.src = w.src;
+      // скрипт виджета ждёт DOMContentLoaded, который уже прошёл, — запускаем его своим событием
+      s.onload = function () { document.dispatchEvent(new Event('StartWidget' + w.id)); };
+      box.appendChild(s);
+    }
+    modalLast = trigger || null;
+    modal.hidden = false;
+    root.classList.add('kk-modal-open');
+    modal.querySelector('.kk-modal-close').focus();
+  }
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest ? e.target.closest('[data-link]') : null;
+    if (!el || e.metaKey || e.ctrlKey || e.shiftKey || e.button) { return; }
+    var key = el.getAttribute('data-link');
+    var w = (cfg.widgets || {})[key];
+    if (!w || !w.id || !w.src) { return; }
+    e.preventDefault();
+    openWidget(key, el);
+  });
+
   document.querySelectorAll('[data-text]').forEach(function (el) {
     var t = texts[el.getAttribute('data-text')];
     if (t) { el.textContent = t; }
