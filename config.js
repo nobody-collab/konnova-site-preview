@@ -40,7 +40,7 @@ window.SITE_CONFIG = {
       title: 'PRO Стройность',
       text: '2 месяца сопровождения для стабильного результата и новых привычек.',
       badge: 'После марафона',
-      href: '#marathon',
+      href: '#pro',
       tone: '#E4D7C3',
       img: '',
       alt: '',

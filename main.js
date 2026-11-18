@@ -183,7 +183,7 @@
   /* ---------- Индикатор разделов справа (scroll-spy) ---------- */
   var sections = [
     ['top', 'Главная'], ['projects', 'Проекты'], ['system', 'Система'], ['about', 'Обо мне'],
-    ['marathon', 'Марафон'], ['reels', 'Разборы'], ['results', 'Результаты'], ['book', 'Книга'], ['supplements', 'Добавки'],
+    ['marathon', 'Марафон'], ['pro', 'PRO Стройность'], ['reels', 'Разборы'], ['results', 'Результаты'], ['book', 'Книга'], ['supplements', 'Добавки'],
     ['iron-test', 'Тест'], ['readers', 'Читательницам']
   ];
   var railEl = $('kk-rail');

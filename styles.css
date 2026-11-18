@@ -190,3 +190,9 @@ html{scroll-behavior:smooth}
 .kk-hero-dark .kk-leaf{stroke:rgba(255,255,255,.2)}
 .kk-hero-dark h1 svg{stroke:currentColor}
 .kk-hero-dark{margin-top:-14px;padding-top:14px}
+
+/* ---------- Значки соцсетей в шапке, сводка цифр на портрете ---------- */
+.kk-social a{transition:color .3s ease,background .3s ease}.kk-social a:hover{color:var(--accent)!important;background:rgba(123,58,62,.08)}
+@media (max-width:640px){.kk-social{display:none!important}.kk-hero-art>.kk-stats>span>span:first-child{font-size:22px!important}.kk-hero-art>.kk-stats{gap:4px!important}}
+.kk-header nav{margin:0 auto}
+@media (max-width:640px){#book .kk-pill.kk-bob2{right:auto!important;left:0!important;top:5%!important}#book .kk-pill.kk-bob3{left:auto!important;right:0!important;bottom:4%!important}}
