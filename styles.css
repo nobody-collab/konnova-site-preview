@@ -212,3 +212,15 @@ html{scroll-behavior:smooth}
 .kk-modal-open,.kk-modal-open body{overflow:hidden}
 @media (max-width:640px){.kk-modal{padding:10px 8px}.kk-modal-panel{border-radius:22px}.kk-modal-head{padding:10px 10px 10px 18px}.kk-modal-title{font-size:20px}}
 .kk-modal-widget{position:relative}.kk-modal-widget::before{content:'Загружаем анкету…';position:absolute;top:140px;left:0;right:0;text-align:center;font-size:14px;color:#9C8878}.kk-modal-widget iframe{position:relative;display:block;background:#FFFFFF}
+
+/* ---------- Плашки вокруг баночки добавки (до шести) ---------- */
+.kk-spill{position:absolute;border-radius:999px;padding:10px 22px;font-size:22px;color:#4A3F36;white-space:nowrap;animation:kk-bob 7s ease-in-out infinite}
+.kk-spill-0{left:0;top:9%}
+.kk-spill-1{right:0;top:20%;animation-delay:-2s}
+.kk-spill-2{left:-2%;top:47%;animation-delay:-4s}
+.kk-spill-3{right:-1%;bottom:22%;animation-delay:-3s}
+.kk-spill-4{left:6%;bottom:6%;animation-delay:-5s}
+.kk-spill-5{right:8%;bottom:1%;animation-delay:-1s}
+@media (max-width:640px){.kk-spill{font-size:16px;padding:6px 14px}.kk-spill-0{top:2%}.kk-spill-1{top:11%}.kk-spill-2{left:0;top:auto;bottom:24%}.kk-spill-3{right:0;bottom:13%}.kk-spill-4{left:2%;bottom:2%}}
+@media (prefers-reduced-motion: reduce){.kk-spill{animation:none!important}}
+@media (max-width:640px){.kk-spill-2{bottom:20%}}
