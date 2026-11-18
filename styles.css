@@ -241,3 +241,4 @@ html{scroll-behavior:smooth}
   .kk-stat{height:31px;padding:0 12px 0 10px;gap:7px}.kk-stat svg{width:14px;height:14px}.kk-stat span{font-size:17px!important}
 }
 @media (max-width:640px){.kk-hero-art>.kk-stats{top:12%!important}}
+@media (max-width:640px){.kk-hero-art>.kk-stats.kk-drift:nth-of-type(n){top:9%!important;left:-30px!important}}
