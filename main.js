@@ -49,6 +49,14 @@
   var texts = {
     ironCta: ironSupp.isOut ? ironSupp.ctaOut : ironSupp.ctaSoon
   };
+  // <a data-link="marathonForm"> — адрес из config.links; внешние ссылки открываются в новой вкладке
+  document.querySelectorAll('[data-link]').forEach(function (el) {
+    var url = (cfg.links || {})[el.getAttribute('data-link')];
+    if (!url) { return; }
+    el.setAttribute('href', url);
+    if (/^https?:/.test(url)) { el.setAttribute('target', '_blank'); el.setAttribute('rel', 'noopener'); }
+  });
+
   document.querySelectorAll('[data-text]').forEach(function (el) {
     var t = texts[el.getAttribute('data-text')];
     if (t) { el.textContent = t; }
