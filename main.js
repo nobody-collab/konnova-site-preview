@@ -92,8 +92,21 @@
       modalLoaded[key] = true;
       var box = document.createElement('div');
       box.setAttribute('data-widget', key);
-      box.className = 'kk-modal-widget';
+      box.className = 'kk-modal-widget is-loading';
+      box.innerHTML = '<div class="kk-loader" role="status"><span class="kk-loader-ring" aria-hidden="true"></span><span class="kk-loader-text">Загружаем анкету…</span></div>';
       body.appendChild(box);
+      // виджет сообщает свою высоту, когда форма отрисована, — по этому сообщению убираем индикатор
+      var onReady = function (e) {
+        if (!e.data || e.data.uniqName !== w.id || !e.data.height) { return; }
+        box.classList.remove('is-loading', 'is-slow');
+        window.removeEventListener('message', onReady);
+      };
+      window.addEventListener('message', onReady);
+      setTimeout(function () {
+        if (!box.classList.contains('is-loading')) { return; }
+        box.classList.add('is-slow');
+        box.querySelector('.kk-loader-text').textContent = 'Анкета грузится дольше обычного. Можно подождать или открыть её в новой вкладке — ссылка ниже.';
+      }, 12000);
       var s = document.createElement('script');
       s.id = w.id;
       s.src = w.src;
