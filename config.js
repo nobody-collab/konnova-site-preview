@@ -16,8 +16,16 @@ window.SITE_CONFIG = {
   // Внешние ссылки для кнопок (атрибут data-link в разметке). Пустая строка — кнопка ведёт на якорь из разметки.
   links: {
     // Страница анкеты предзаписи на марафон в GetCourse — запасной адрес, если всплывающее окно не открылось.
-    marathonForm: 'https://katy-konnova.ru/Anketa_marafon'
+    marathonForm: 'https://katy-konnova.ru/Anketa_marafon',
+    // Лист ожидания книги в GetCourse (страница Алёны) — запасной адрес для окна
+    bookWaitlist: 'https://katy-konnova.ru/kniga',
+    // Где лежит гайд «Чекап 35+» для читательниц. [Уточнить у команды: канал и пост]
+    readersGift: 'https://t.me/katy_konnova'
   },
+
+  // Лента «Разборы» из Google Таблицы (опубликованной как CSV). Пусто — берётся список reels ниже.
+  // Шаблон колонок — reels-template.csv в этой папке.
+  reelsSheet: '',
 
   // Виджеты GetCourse, которые открываются во всплывающем окне по кнопкам с тем же data-link.
   // id и src — из «Настройки и код виджета» (значения атрибутов id и src тега <script>).
@@ -26,6 +34,11 @@ window.SITE_CONFIG = {
       title: 'Анкета предзаписи на марафон',
       id: '3b2c88a2ebe48df0e4ec71d37916327ae05f9ae4',
       src: 'https://katy-konnova.ru/pl/lite/widget/script?id=1686639'
+    },
+    bookWaitlist: {
+      title: 'Лист ожидания книги «Лёгкая Я»',
+      id: 'a9a7f2db3ba28a366b2d612bc93e9cd8a015599b',
+      src: 'https://katy-konnova.ru/pl/lite/widget/script?id=1688196'
     }
   },
 
@@ -130,6 +143,12 @@ window.SITE_CONFIG = {
       statusOut: 'Где купить',
       ctaSoon: 'Добавка выйдет в январе — в лист ожидания',
       ctaOut: 'Купить Iron Women на маркетплейсе',
+      // buy — кнопки магазинов после выхода; показываются только те, у которых заполнен href
+      buy: [
+        { name: 'Купить на Ozon', href: '' },
+        { name: 'Купить на Wildberries', href: '' },
+        { name: 'Заказать на сайте', note: 'доставка СДЭК', href: '' }
+      ],
       hrefSoon: '#readers',
       hrefOut: '#readers',
       secondary: { text: 'Пройти тест', href: '#iron-test' },

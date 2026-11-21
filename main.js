@@ -75,7 +75,7 @@
       modal.setAttribute('aria-modal', 'true');
       modal.innerHTML = '<div class="kk-modal-panel"><div class="kk-modal-head"><span class="kk-modal-title"></span>' +
         '<button type="button" class="kk-modal-close" aria-label="Закрыть">×</button></div>' +
-        '<div class="kk-modal-body"></div><a class="kk-modal-alt" target="_blank" rel="noopener">Не открывается? Анкета в новой вкладке ↗</a></div>';
+        '<div class="kk-modal-body"></div><a class="kk-modal-alt" target="_blank" rel="noopener">Не открывается? Открыть форму в новой вкладке ↗</a></div>';
       document.body.appendChild(modal);
       modal.addEventListener('click', function (e) { if (e.target === modal || e.target.closest('.kk-modal-close')) { closeModal(); } });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeModal(); } });
@@ -93,7 +93,7 @@
       var box = document.createElement('div');
       box.setAttribute('data-widget', key);
       box.className = 'kk-modal-widget is-loading';
-      box.innerHTML = '<div class="kk-loader" role="status"><span class="kk-loader-ring" aria-hidden="true"></span><span class="kk-loader-text">Загружаем анкету…</span></div>';
+      box.innerHTML = '<div class="kk-loader" role="status"><span class="kk-loader-ring" aria-hidden="true"></span><span class="kk-loader-text">Загружаем форму…</span></div>';
       body.appendChild(box);
       // виджет сообщает свою высоту, когда форма отрисована, — по этому сообщению убираем индикатор
       var onReady = function (e) {
@@ -105,7 +105,7 @@
       setTimeout(function () {
         if (!box.classList.contains('is-loading')) { return; }
         box.classList.add('is-slow');
-        box.querySelector('.kk-loader-text').textContent = 'Анкета грузится дольше обычного. Можно подождать или открыть её в новой вкладке — ссылка ниже.';
+        box.querySelector('.kk-loader-text').textContent = 'Форма грузится дольше обычного. Можно подождать или открыть её в новой вкладке — ссылка ниже.';
       }, 12000);
       var s = document.createElement('script');
       s.id = w.id;
@@ -163,13 +163,15 @@
   /* ---------- «Добавки»: по блоку на каждую запись из config.js ---------- */
   var suppEl = $('supplements');
   if (suppEl) {
-    var SUPP_TPL = "<div id=\"{{ID}}\" class=\"kk-supp\" style=\"max-width: 1240px; margin: 0 auto; padding: 104px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 56px; align-items: center\">\n<div class=\"kk-left\" style=\"position: relative; display: flex; flex-direction: column; gap: 20px\">\n<p style=\"margin: 0; display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #9C8878\"><span aria-hidden=\"true\" style=\"width: 36px; height: 1px; background: #CDBDA5\"></span>Добавка · {{STATUS}}</p>\n<h2 style=\"margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(34px, 9.2vw, 52px); line-height: 1.05; color: #3F352D\">{{TITLE}} <span style=\"font-style: italic; color: var(--accent)\">{{ACCENT}}</span></h2>\n{{LEAD}}{{FACTS}}\n<div style=\"display: flex; flex-wrap: wrap; gap: 10px\">\n<a href=\"{{CTAHREF}}\"{{CTAATTR}} style=\"display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 28px; box-sizing: border-box; border-radius: 28px; background: var(--accent); color: #FFFFFF; text-decoration: none; font-weight: 600\">{{CTA}}</a>\n{{SECONDARY}}\n</div>\n<p style=\"margin: 0; font-size: 13px; line-height: 1.55; color: #9C8878\">{{NOTE}}</p>\n</div>\n<div class=\"kk-right kk-prod-stage\" style=\"{{ORDER}}position: relative; min-height: 460px; display: flex; align-items: center; justify-content: center\">\n<div aria-hidden=\"true\" style=\"position: absolute; right: 6%; bottom: 4%; width: 320px; height: 280px; border-radius: 999px; background: #E3D5C0; filter: blur(56px); opacity: 0.8\"></div>\n<div aria-hidden=\"true\" style=\"position: absolute; width: 430px; max-width: 96%; aspect-ratio: 1 / 1; border-radius: 999px; border: 1px dashed #D9CBB6\"></div>\n<div class=\"kk-glass\" style=\"position: relative; width: 340px; max-width: 78%; aspect-ratio: 1 / 1; border-radius: 999px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden\">\n<div aria-hidden=\"true\" style=\"position: absolute; bottom: 0; width: 100%; height: 34%; background: #EAE0D0\"></div>\n<div style=\"position: relative; margin-bottom: 22%; width: 46%; aspect-ratio: 5 / 7; opacity: {{OPACITY}}; display: flex; flex-direction: column; box-shadow: 0 22px 40px rgba(122,86,74,0.2); border-radius: 22px 22px 18px 18px\">\n<span aria-hidden=\"true\" style=\"height: 17%; border-radius: 14px 14px 4px 4px; background: #D8C4A6; margin: 0 6%\"></span>\n<span style=\"flex-grow: 1; border-radius: 16px 16px 18px 18px; background: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px\"><span style=\"font-size: 8px; line-height: 1.5; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; padding: 0 10px; color: #7A6D62\">{{BRAND}}</span><span style=\"font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 6.4vw, 31px); line-height: 0.95; font-style: italic; text-align: center; padding: 0 8px; color: #4A3F36\">{{LABEL}}</span><span aria-hidden=\"true\" style=\"width: 28px; height: 1px; background: #CDBDA5\"></span></span>\n</div>\n</div>\n{{PILLS}}\n</div>\n</div>";
+    var SUPP_TPL = "<div id=\"{{ID}}\" class=\"kk-supp\" style=\"max-width: 1240px; margin: 0 auto; padding: 104px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 56px; align-items: center\">\n<div class=\"kk-left\" style=\"position: relative; display: flex; flex-direction: column; gap: 20px\">\n<p style=\"margin: 0; display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #9C8878\"><span aria-hidden=\"true\" style=\"width: 36px; height: 1px; background: #CDBDA5\"></span>Добавка · {{STATUS}}</p>\n<h2 style=\"margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(34px, 9.2vw, 52px); line-height: 1.05; color: #3F352D\">{{TITLE}} <span style=\"font-style: italic; color: var(--accent)\">{{ACCENT}}</span></h2>\n{{LEAD}}{{FACTS}}\n<div style=\"display: flex; flex-wrap: wrap; gap: 10px\">\n{{CTABLOCK}}\n{{SECONDARY}}\n</div>\n<p style=\"margin: 0; font-size: 13px; line-height: 1.55; color: #9C8878\">{{NOTE}}</p>\n</div>\n<div class=\"kk-right kk-prod-stage\" style=\"{{ORDER}}position: relative; min-height: 460px; display: flex; align-items: center; justify-content: center\">\n<div aria-hidden=\"true\" style=\"position: absolute; right: 6%; bottom: 4%; width: 320px; height: 280px; border-radius: 999px; background: #E3D5C0; filter: blur(56px); opacity: 0.8\"></div>\n<div aria-hidden=\"true\" style=\"position: absolute; width: 430px; max-width: 96%; aspect-ratio: 1 / 1; border-radius: 999px; border: 1px dashed #D9CBB6\"></div>\n<div class=\"kk-glass\" style=\"position: relative; width: 340px; max-width: 78%; aspect-ratio: 1 / 1; border-radius: 999px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden\">\n<div aria-hidden=\"true\" style=\"position: absolute; bottom: 0; width: 100%; height: 34%; background: #EAE0D0\"></div>\n<div style=\"position: relative; margin-bottom: 22%; width: 46%; aspect-ratio: 5 / 7; opacity: {{OPACITY}}; display: flex; flex-direction: column; box-shadow: 0 22px 40px rgba(122,86,74,0.2); border-radius: 22px 22px 18px 18px\">\n<span aria-hidden=\"true\" style=\"height: 17%; border-radius: 14px 14px 4px 4px; background: #D8C4A6; margin: 0 6%\"></span>\n<span style=\"flex-grow: 1; border-radius: 16px 16px 18px 18px; background: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px\"><span style=\"font-size: 8px; line-height: 1.5; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; padding: 0 10px; color: #7A6D62\">{{BRAND}}</span><span style=\"font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 6.4vw, 31px); line-height: 0.95; font-style: italic; text-align: center; padding: 0 8px; color: #4A3F36\">{{LABEL}}</span><span aria-hidden=\"true\" style=\"width: 28px; height: 1px; background: #CDBDA5\"></span></span>\n</div>\n</div>\n{{PILLS}}\n</div>\n</div>";
     var FACT_TPL = "<div class=\"kk-glass\" style=\"border-radius: 22px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px\"><span style=\"font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; line-height: 1.1; color: #3F352D\">{{T}}</span><span style=\"font-size: 14px; line-height: 1.55; color: #6E6258\">{{D}}</span></div>";
     var SECOND_TPL = "<a href=\"{{H}}\"{{A}} style=\"display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 24px; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-weight: 600\">{{T}} <span aria-hidden=\"true\">→</span></a>";
     var PILL_TPL = "<span class=\"kk-spill kk-spill-{{N}} kk-glass\" style=\"font-family: 'Cormorant Garamond', serif; font-style: italic\">{{T}}</span>";
     var LEAD_TPL = "<p style=\"margin: 0; font-size: 17px; line-height: 1.7; color: #6E6258; max-width: 520px\">{{T}}</p>\n";
     var STRONG_TPL = "<p style=\"margin: 0; font-size: 17px; line-height: 1.6; font-weight: 600; color: #4A3F36; max-width: 520px\">{{T}}</p>\n";
     var FACTS_TPL = "<div style=\"display: grid; grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); gap: 10px\">\n{{T}}\n</div>\n";
+    var CTA_TPL = "<a href=\"{{H}}\"{{A}} style=\"display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 28px; box-sizing: border-box; border-radius: 28px; background: var(--accent); color: #FFFFFF; text-decoration: none; font-weight: 600\">{{T}}</a>";
+    var BUY_TPL = "<a href=\"{{H}}\"{{A}} class=\"kk-buy{{CLS}}\"><span>{{T}}</span>{{N}}</a>";
     var fill = function (tpl, map) {
       return tpl.replace(/\{\{(\w+)\}\}/g, function (_, key) { return map[key] == null ? '' : map[key]; });
     };
@@ -184,9 +186,14 @@
         ACCENT: esc(p.titleAccent),
         LEAD: [].concat(p.lead || []).map(function (s) { return fill(LEAD_TPL, { T: esc(s) }); }).join('') + (p.strong ? fill(STRONG_TPL, { T: esc(p.strong) }) : ''),
         FACTS: (p.facts || []).length ? fill(FACTS_TPL, { T: p.facts.map(function (f) { return fill(FACT_TPL, { T: esc(f.title), D: esc(f.text) }); }).join('\n') }) : '',
-        CTAHREF: esc(ctaHref),
-        CTAATTR: linkAttrs(ctaHref),
-        CTA: esc(p.isOut ? p.ctaOut : p.ctaSoon),
+        CTABLOCK: (function () {
+          // после выхода — кнопки магазинов из buy (только с заполненной ссылкой), иначе одна кнопка
+          var shops = p.isOut ? (p.buy || []).filter(function (b) { return b && b.href; }) : [];
+          if (!shops.length) { return fill(CTA_TPL, { H: esc(ctaHref), A: linkAttrs(ctaHref), T: esc(p.isOut ? p.ctaOut : p.ctaSoon) }); }
+          return shops.map(function (b, n) {
+            return fill(BUY_TPL, { H: esc(b.href), A: linkAttrs(b.href), CLS: n ? '' : ' is-main', T: esc(b.name), N: b.note ? '<small>' + esc(b.note) + '</small>' : '' });
+          }).join('\n');
+        })(),
         SECONDARY: sec ? fill(SECOND_TPL, { H: esc(sec.href), A: linkAttrs(sec.href), T: esc(sec.text) }) : '',
         NOTE: esc(p.note),
         BRAND: esc(p.brand),
@@ -200,9 +207,46 @@
 
   /* ---------- «Разборы»: карусель (рилсы, советы) ---------- */
   var reelsEl = $('kk-reels');
-  if (reelsEl) {
+  // Таблица Google: Файл → Поделиться → Опубликовать в интернете → CSV. Колонки: Тип, Заголовок, Подпись, Ссылка, Обложка
+  var parseCsv = function (text) {
+    var rows = [], row = [], cell = '', q = false;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (q) {
+        if (ch === '"' && text[i + 1] === '"') { cell += '"'; i++; }
+        else if (ch === '"') { q = false; }
+        else { cell += ch; }
+      } else if (ch === '"') { q = true; }
+      else if (ch === ',') { row.push(cell); cell = ''; }
+      else if (ch === '\n' || ch === '\r') {
+        if (ch === '\r' && text[i + 1] === '\n') { i++; }
+        row.push(cell); rows.push(row); row = []; cell = '';
+      } else { cell += ch; }
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  };
+  // ссылку «поделиться» из Google Диска превращаем в прямую ссылку на картинку
+  var imgUrl = function (u) {
+    var m = /drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/.exec(u || '');
+    return m ? 'https://lh3.googleusercontent.com/d/' + m[1] : (u || '');
+  };
+  var sheetToReels = function (text) {
+    var rows = parseCsv(text).filter(function (r) { return r.some(function (c) { return c.trim(); }); });
+    if (rows.length < 2) { return []; }
+    var head = rows[0].map(function (h) { return h.trim().toLowerCase(); });
+    var col = function (names) { for (var k = 0; k < names.length; k++) { var n = head.indexOf(names[k]); if (n >= 0) { return n; } } return -1; };
+    var c = { type: col(['тип', 'type']), title: col(['заголовок', 'title']), sub: col(['подпись', 'sub']), href: col(['ссылка', 'href', 'link']), img: col(['обложка', 'img', 'image']) };
+    var tones = ['#E8DBC8', '#F1E8DB', '#E2D4BF', '#EAE0D2', '#EBE0D0', '#DED1BD'];
+    return rows.slice(1).map(function (r, i) {
+      var get = function (k) { return c[k] >= 0 ? (r[c[k]] || '').trim() : ''; };
+      var t = get('type').toLowerCase();
+      return { type: /совет|tip/.test(t) ? 'tip' : 'reel', title: get('title'), sub: get('sub'), href: get('href'), img: imgUrl(get('img')), tone: tones[i % tones.length] };
+    }).filter(function (r) { return r.title; });
+  };
+  var renderReels = function (list) {
     var TYPES = { reel: 'Рилс', tip: 'Совет' };
-    reelsEl.innerHTML = (cfg.reels || []).map(function (r) {
+    reelsEl.innerHTML = (list || []).map(function (r) {
       var href = r.href || 'https://www.instagram.com/katy_konnova/';
       var type = TYPES[r.type] ? r.type : 'reel';
       return '' +
@@ -259,6 +303,25 @@
       });
       go(Math.floor((cards.length - 1) / 2), true);
       mark();
+    }
+  };
+  if (reelsEl) {
+    if (cfg.reelsSheet && window.fetch) {
+      var reelsDone = false;
+      var reelsFallback = function () { if (!reelsDone) { reelsDone = true; renderReels(cfg.reels); } };
+      var reelsTimer = setTimeout(reelsFallback, 5000);
+      fetch(cfg.reelsSheet, { cache: 'no-store' })
+        .then(function (r) { if (!r.ok) { throw new Error(r.status); } return r.text(); })
+        .then(function (text) {
+          if (reelsDone) { return; }
+          var list = sheetToReels(text);
+          clearTimeout(reelsTimer);
+          reelsDone = true;
+          renderReels(list.length ? list : cfg.reels);
+        })
+        .catch(function () { clearTimeout(reelsTimer); reelsFallback(); });
+    } else {
+      renderReels(cfg.reels);
     }
   }
 

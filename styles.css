@@ -242,3 +242,8 @@ html{scroll-behavior:smooth}
 }
 @media (max-width:640px){.kk-hero-art>.kk-stats{top:12%!important}}
 @media (max-width:640px){.kk-hero-art>.kk-stats.kk-drift:nth-of-type(n){top:9%!important;left:-30px!important}}
+
+/* ---------- Кнопки магазинов у добавки ---------- */
+.kk-buy{display:inline-flex;flex-direction:column;justify-content:center;min-height:52px;padding:7px 24px;box-sizing:border-box;border-radius:28px;border:1px solid var(--accent);color:var(--accent);text-decoration:none;font-weight:600;line-height:1.2;transition:background .3s ease,color .3s ease}
+.kk-buy small{font-size:12px;font-weight:500;opacity:.75}
+.kk-buy.is-main,.kk-buy:hover{background:var(--accent);color:#FFFFFF}
