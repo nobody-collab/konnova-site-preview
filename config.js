@@ -74,8 +74,8 @@ window.SITE_CONFIG = {
       badge: { flag: 'salesOpen', on: 'Продажи открыты', off: 'Предзапись' },
       href: '#marathon',
       tone: '#EADECD',
-      img: '',
-      alt: '',
+      img: 'assets/photos/card-marathon.jpg',
+      alt: 'Катерина за завтраком с круассаном',
       photo: 'Фото: лёгкость, движение'
     },
     {
@@ -85,8 +85,8 @@ window.SITE_CONFIG = {
       badge: 'После марафона',
       href: '#pro',
       tone: '#E4D7C3',
-      img: '',
-      alt: '',
+      img: 'assets/photos/card-pro.jpg',
+      alt: 'Катерина со стаканом воды',
       photo: 'Фото: с бутылкой воды'
     },
     {
@@ -107,8 +107,8 @@ window.SITE_CONFIG = {
       badge: { flag: 'ironReleased', on: 'Железо в продаже', off: 'Январь' },
       href: '#iron',
       tone: '#E0D2BE',
-      img: '',
-      alt: '',
+      img: 'assets/photos/card-health.jpg',
+      alt: 'Катерина с капсулой добавки',
       photo: 'Фото: продукт'
     }
   ],
