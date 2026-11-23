@@ -497,6 +497,24 @@
   }
   /* ---------- «Результаты»: лента историй со стрелками ---------- */
   var resEl = $('kk-results');
+  if (resEl && cfg.cases && cfg.cases.length) {
+    var photo = function (src, label, bg, color) {
+      return src ? '<img src="' + esc(src) + '" alt="' + label + '" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 18px; display: block">'
+        : '<div style="aspect-ratio: 3 / 4; border-radius: 18px; background: ' + bg + '; display: flex; align-items: flex-end; padding: 10px; box-sizing: border-box; font-size: 12px; color: ' + color + '">' + label + '</div>';
+    };
+    resEl.innerHTML = cfg.cases.map(function (k) {
+      var ph = k.photos || [];
+      return '<div class="kk-res-card kk-lift" style="background: #FFFFFF; border-radius: 28px; padding: 14px 14px 22px; display: flex; flex-direction: column; gap: 12px">' +
+        '<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">' + photo(ph[0], 'До', '#EFE6D9', '#6E6258') + photo(ph[1], 'После', '#E6DAC7', '#4A3F36') + '</div>' +
+        '<div style="padding: 0 8px; display: flex; flex-direction: column; gap: 6px">' +
+        '<span style="font-family: ' + SERIF + '; font-size: 34px; font-weight: 500; line-height: 1; color: var(--accent)">' + esc(k.result) + '</span>' +
+        '<span style="font-family: ' + SERIF + '; font-size: 22px; line-height: 1.15; color: #3F352D">' + esc(k.name) + '</span>' +
+        (k.program ? '<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #9C8878">' + esc(k.program) + '</span>' : '') +
+        '<span style="font-size: 14px; line-height: 1.6; color: #6E6258">' + esc(k.text) + '</span>' +
+        (k.href ? '<a href="' + esc(k.href) + '"' + linkAttrs(k.href) + ' style="align-self: flex-start; font-size: 14px; font-weight: 600; text-underline-offset: 4px">Читать историю →</a>' : '') +
+        '</div></div>';
+    }).join('');
+  }
   if (resEl && resEl.children.length) {
     var resBtns = [].slice.call(document.querySelectorAll('[data-results]'));
     var resState = function () {
