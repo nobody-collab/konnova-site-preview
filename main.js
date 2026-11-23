@@ -211,6 +211,24 @@
     }).join('\n');
   }
 
+  /* ---------- Книга: на телефоне пункты «что внутри» раскрываются по нажатию ---------- */
+  var narrow = window.matchMedia ? window.matchMedia('(max-width: 640px)') : { matches: false };
+  [].forEach.call(document.querySelectorAll('.kk-fold'), function (li) {
+    var title = li.querySelector('.kk-fold-title');
+    if (!title) { return; }
+    title.setAttribute('role', 'button');
+    title.setAttribute('tabindex', '0');
+    var sync = function () {
+      if (narrow.matches) { title.setAttribute('aria-expanded', li.classList.contains('is-open') ? 'true' : 'false'); }
+      else { title.removeAttribute('aria-expanded'); }
+    };
+    var toggle = function () { if (!narrow.matches) { return; } li.classList.toggle('is-open'); sync(); };
+    title.addEventListener('click', toggle);
+    title.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    if (narrow.addEventListener) { narrow.addEventListener('change', sync); }
+    sync();
+  });
+
   /* ---------- «Разборы»: карусель (рилсы, советы) ---------- */
   var reelsEl = $('kk-reels');
   // Таблица Google: Файл → Поделиться → Опубликовать в интернете → CSV. Колонки: Тип, Заголовок, Подпись, Ссылка, Обложка

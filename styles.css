@@ -273,3 +273,19 @@ html{scroll-behavior:smooth}
   .kk-hscroll>*{transform:none!important}
   .kk-hscroll .kk-ln{stroke-dashoffset:0!important}
 }
+
+/* ---------- Телефон: компактнее «Обо мне», книга и тест ---------- */
+@media (max-width:640px){
+  .kk-about-photo{aspect-ratio:1/1!important}
+  .kk-about-photo img{object-position:50% 12%!important}
+  #book .kk-prod-stage{min-height:330px!important}
+  #book .kk-book{max-width:62%!important}
+  .kk-fold{padding:12px 0!important}
+  .kk-fold-title{cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:21px!important}
+  .kk-fold-title::after{content:'+';flex-shrink:0;font-family:'Manrope',sans-serif;font-size:22px;line-height:1;color:var(--accent);transition:transform .3s ease}
+  .kk-fold.is-open .kk-fold-title::after{transform:rotate(45deg)}
+  .kk-fold-text{display:none!important}
+  .kk-fold.is-open .kk-fold-text{display:block!important;padding-top:6px}
+  #kk-symptoms [role="group"]{display:grid!important;grid-template-columns:1fr 1fr;gap:8px!important}
+  #kk-symptoms .kk-chip{min-height:52px;height:auto;padding:8px 12px;border-radius:18px;font-size:16px;line-height:1.15;white-space:normal;text-align:center}
+}
