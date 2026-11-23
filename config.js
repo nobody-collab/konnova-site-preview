@@ -97,8 +97,8 @@ window.SITE_CONFIG = {
       badge: { flag: 'bookReleased', on: 'Уже в продаже', off: 'Скоро' },
       href: '#book',
       tone: '#EFE5D6',
-      img: '',
-      alt: '',
+      img: 'assets/photos/card-book.jpg',
+      alt: 'Катерина с книгой',
       photo: 'Фото: с книгой'
     },
     {
@@ -109,7 +109,7 @@ window.SITE_CONFIG = {
       href: '#iron',
       tone: '#E0D2BE',
       img: 'assets/photos/card-health.jpg',
-      alt: 'Катерина с капсулой добавки',
+      alt: 'Катерина с капсулой и баночкой добавки',
       photo: 'Фото: продукт'
     }
   ],
@@ -140,6 +140,9 @@ window.SITE_CONFIG = {
     {
       id: 'iron',
       flag: 'ironReleased',
+      // photo — фото в круге вместо нарисованной баночки (необязательно)
+      photo: 'assets/photos/iron.jpg',
+      photoAlt: 'Катерина с капсулой Iron Women',
       brand: 'Absolute balance by Katy Konnova',
       label: 'Iron women',
       title: 'Iron Women —',

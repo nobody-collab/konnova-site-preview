@@ -254,3 +254,9 @@ html{scroll-behavior:smooth}
 .kk-case-img.is-photo{padding:0}
 .kk-case-img.is-photo img{width:100%;height:100%;max-height:none;object-fit:cover;border-radius:0;box-shadow:none}
 .kk-case-img span{position:absolute;left:10px;bottom:10px;padding:4px 10px;border-radius:999px;background:rgba(251,248,243,.92);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#7A6D62}
+
+/* ---------- Первый экран: видео фоном ---------- */
+.kk-hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 35%;pointer-events:none}
+.kk-hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(42,35,30,.94) 0%,rgba(42,35,30,.84) 38%,rgba(42,35,30,.38) 72%,rgba(42,35,30,.3) 100%)}
+.kk-hero-dark .kk-hero-art>[aria-hidden="true"][style*="border: 1px solid"],.kk-hero-dark .kk-hero-art>.kk-leaf{display:none}
+@media (max-width:860px){.kk-hero-shade{background:linear-gradient(180deg,rgba(42,35,30,.93) 0%,rgba(42,35,30,.86) 52%,rgba(42,35,30,.35) 78%,rgba(42,35,30,.5) 100%)}.kk-hero-video{object-position:50% 30%}}
