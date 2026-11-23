@@ -505,7 +505,9 @@
     resEl.innerHTML = cfg.cases.map(function (k) {
       var ph = k.photos || [];
       return '<div class="kk-res-card kk-lift" style="background: #FFFFFF; border-radius: 28px; padding: 14px 14px 22px; display: flex; flex-direction: column; gap: 12px">' +
-        '<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">' + photo(ph[0], 'До', '#EFE6D9', '#6E6258') + photo(ph[1], 'После', '#E6DAC7', '#4A3F36') + '</div>' +
+        (k.image
+          ? '<a class="kk-case-img' + (k.kind === 'photo' ? ' is-photo' : '') + '" href="' + esc(k.image) + '" target="_blank" rel="noopener" aria-label="' + (k.kind === 'photo' ? 'Фото' : 'Отзыв') + ': ' + esc(k.name) + ' — открыть целиком"><img src="' + esc(k.image) + '" alt="' + (k.kind === 'photo' ? 'Фото: ' : 'Отзыв: ') + esc(k.name) + '" loading="lazy"><span>' + (k.kind === 'photo' ? 'Фото' : 'Отзыв') + '</span></a>'
+          : '<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">' + photo(ph[0], 'До', '#EFE6D9', '#6E6258') + photo(ph[1], 'После', '#E6DAC7', '#4A3F36') + '</div>') +
         '<div style="padding: 0 8px; display: flex; flex-direction: column; gap: 6px">' +
         '<span style="font-family: ' + SERIF + '; font-size: 34px; font-weight: 500; line-height: 1; color: var(--accent)">' + esc(k.result) + '</span>' +
         '<span style="font-family: ' + SERIF + '; font-size: 22px; line-height: 1.15; color: #3F352D">' + esc(k.name) + '</span>' +
