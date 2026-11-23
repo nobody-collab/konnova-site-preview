@@ -261,3 +261,15 @@ html{scroll-behavior:smooth}
 .kk-hero-text p{text-shadow:0 1px 14px rgba(30,24,20,.45)}
 @media (max-width:760px){.kk-hero-text>p:first-child{justify-content:center}.kk-hero-text>p:first-child>span{display:none}.kk-hero-btns a:first-child{min-height:56px!important}}
 @media (max-width:760px){.kk-hero-text>p:first-child,.kk-hero-text>h1+p{display:none!important}}
+
+/* ---------- Телефон: карточки в горизонтальные ленты со свайпом, чтобы сократить длину страницы ---------- */
+@media (max-width:640px){
+  .kk-hscroll{display:flex!important;flex-wrap:nowrap!important;gap:12px!important;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-left:-24px!important;margin-right:-24px!important;padding:4px 24px 14px!important;scroll-padding-left:24px}
+  .kk-hscroll::-webkit-scrollbar{display:none}
+  .kk-hscroll>*{flex:0 0 80%!important;max-width:80%;scroll-snap-align:start;box-sizing:border-box}
+  .kk-hscroll-sm>*{flex-basis:62%!important;max-width:62%}
+  /* анимации появления завязаны на вертикальную прокрутку — внутри ленты показываем карточки сразу */
+  .kk-hscroll>*,.kk-hscroll>* *{animation:none!important;opacity:1!important;translate:none!important;scale:none!important;filter:none!important}
+  .kk-hscroll>*{transform:none!important}
+  .kk-hscroll .kk-ln{stroke-dashoffset:0!important}
+}

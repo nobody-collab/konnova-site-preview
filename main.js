@@ -174,7 +174,7 @@
     var PILL_TPL = "<span class=\"kk-spill kk-spill-{{N}} kk-glass\" style=\"font-family: 'Cormorant Garamond', serif; font-style: italic\">{{T}}</span>";
     var LEAD_TPL = "<p style=\"margin: 0; font-size: 17px; line-height: 1.7; color: #6E6258; max-width: 520px\">{{T}}</p>\n";
     var STRONG_TPL = "<p style=\"margin: 0; font-size: 17px; line-height: 1.6; font-weight: 600; color: #4A3F36; max-width: 520px\">{{T}}</p>\n";
-    var FACTS_TPL = "<div style=\"display: grid; grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); gap: 10px\">\n{{T}}\n</div>\n";
+    var FACTS_TPL = "<div class=\"kk-hscroll kk-hscroll-sm\" style=\"display: grid; grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); gap: 10px\">\n{{T}}\n</div>\n";
     var CTA_TPL = "<a href=\"{{H}}\"{{A}} style=\"display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 28px; box-sizing: border-box; border-radius: 28px; background: var(--accent); color: #FFFFFF; text-decoration: none; font-weight: 600\">{{T}}</a>";
     var BUY_TPL = "<a href=\"{{H}}\"{{A}} class=\"kk-buy{{CLS}}\"><span>{{T}}</span>{{N}}</a>";
     var fill = function (tpl, map) {
