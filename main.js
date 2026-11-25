@@ -692,4 +692,18 @@
       grow();
     }
   }
+
+  /* ---------- Видео YouTube: плеер грузится только по нажатию на обложку ---------- */
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('[data-yt]') : null;
+    if (!b) { return; }
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(b.getAttribute('data-yt')) + '?autoplay=1&rel=0&playsinline=1';
+    f.title = b.getAttribute('aria-label') || 'Видео';
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.setAttribute('allowfullscreen', '');
+    f.className = 'kk-yt-frame';
+    b.replaceWith(f);
+    f.focus();
+  });
 })();

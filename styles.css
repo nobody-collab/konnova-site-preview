@@ -363,3 +363,19 @@ html{scroll-behavior:smooth}
 .kk-modal-more .kk-more-lead{font-weight:600;color:#4A3F36}
 .kk-more-btn{display:inline-flex;align-items:center;min-height:52px;padding:8px 28px;box-sizing:border-box;border-radius:28px;background:var(--accent);color:#FFFFFF!important;text-decoration:none;font-weight:600;font-size:15px;margin-top:6px}
 @media (prefers-reduced-motion: reduce){.kk-pro-card,.kk-pro-more>span,.kk-more-link>span{transition:none}.kk-pro-card:hover{transform:none}}
+
+/* ---------- Видео в блоке теста ---------- */
+.kk-video{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:28px 48px;align-items:center;background:#FBF8F3;border-radius:32px;padding:30px}
+.kk-video-text{display:flex;flex-direction:column;gap:14px}
+.kk-yt,.kk-yt-frame{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:22px;overflow:hidden;background:#2A231E}
+.kk-yt{position:relative;padding:0;cursor:pointer}
+.kk-yt img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.kk-yt:hover img{transform:scale(1.03)}
+.kk-yt-play{position:absolute;left:50%;top:50%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:999px;background:var(--accent);color:#FFFFFF;display:flex;align-items:center;justify-content:center;padding-left:4px;box-sizing:border-box;box-shadow:0 14px 34px rgba(42,35,30,.35);transition:transform .4s ease}
+.kk-yt:hover .kk-yt-play,.kk-yt:focus-visible .kk-yt-play{transform:scale(1.08)}
+@media (max-width:760px){.kk-video{grid-template-columns:1fr;padding:20px;border-radius:26px}.kk-yt-play{width:62px;height:62px;margin:-31px 0 0 -31px}}
+.kk-video-next{grid-column:1/-1;justify-self:center;display:flex;flex-direction:column;align-items:center;gap:12px;margin:-14px 0 -10px;font-size:15px;font-weight:600;color:var(--accent);text-decoration:none;text-align:center}
+.kk-video-next-a{width:48px;height:48px;border-radius:999px;border:1px solid #E5D9C8;display:inline-flex;align-items:center;justify-content:center;animation:kk-nudge 2.2s ease-in-out infinite}
+.kk-video-next:hover .kk-video-next-a{background:var(--accent);border-color:var(--accent);color:#FFFFFF}
+@keyframes kk-nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+@media (prefers-reduced-motion: reduce){.kk-video-next-a{animation:none}}

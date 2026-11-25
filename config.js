@@ -203,6 +203,6 @@ window.SITE_CONFIG = {
       { maxScore: 3, title: 'Есть признаки — стоит проверить', text: 'Сдайте ферритин и общий анализ крови: так станет понятно, нужна ли поддержка железа.' },
       { maxScore: 5, title: 'Много признаков нехватки железа', text: 'Не откладывайте анализы. С результатами будет понятно, какая поддержка нужна именно вам.' }
     ],
-    links: { analyses: '#iron-test', video: '#iron-test', buy: '#iron' }
+    links: { analyses: '#iron-test', video: '#kk-iron-video', buy: '#iron' }
   }
 };
