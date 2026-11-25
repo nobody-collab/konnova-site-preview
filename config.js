@@ -28,6 +28,7 @@ window.SITE_CONFIG = {
   // Лента «Результаты». result — крупная цифра; image — фото или скриншот отзыва, kind: 'photo' | 'review';
   // photos — пара [до, после] вместо image; href — ссылка на историю
   cases: [
+    { name: 'Наша семья', program: '', result: '13 лет', text: 'Путь длиной в 13 лет. Мой проект помог выйти из вечного круга диет и закрепить результат.', href: '', image: 'assets/cases/family.jpg', kind: 'photo', pos: '50% 20%', photos: [] },
     { name: 'Анастасия, 34', program: 'Марафон и PRO Стройность', result: '−6,4 кг', text: 'Не хотела смотреть в зеркало. После программы — ещё −2 кг.', href: 'https://t.me/konnovacase/58', image: 'assets/cases/anastasia-34.jpg', kind: 'review', photos: [] },
     { name: 'Ольга, 44 и Георгий, 42', program: 'Марафон и PRO Стройность', result: '−5,3 и −10,5 кг', text: 'Муж и жена — худели вместе.', href: '', image: 'assets/cases/olga-georgiy.jpg', kind: 'photo', photos: [] },
     { name: 'Любовь, 68', program: 'Марафон и PRO Стройность', result: '−9 кг', text: 'За одну программу. За две — −13,6 кг.', href: '', image: 'assets/cases/lyubov-68.jpg', kind: 'review', photos: [] },
@@ -117,14 +118,14 @@ window.SITE_CONFIG = {
   // Карусель «Разборы»: рилсы и советы вперемешку. Фото еды не используем — просьба заказчицы.
   // type: 'reel' | 'tip' — подпись в углу карточки; img — обложка (пока пусто).
   // Карточки с type 'tip' — примеры для показа, тексты нужно заменить на реальные посты.
+  // img — обложка (с текстом на ней, поэтому подпись поверх не выводится); title/sub — для озвучки и запасного вида без обложки
   reels: [
-    { type: 'reel', title: 'Попкорн полезнее салата?', sub: 'Разбор в супермаркете', tone: '#E8DBC8', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { type: 'tip', title: 'Белок в каждый приём пищи', sub: 'Полезный совет', tone: '#F1E8DB', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { type: 'reel', title: 'Бюджетный белок', sub: 'Не хуже стейка', tone: '#E2D4BF', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { type: 'tip', title: 'Сон и аппетит', sub: 'Полезный совет', tone: '#EAE0D2', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { type: 'reel', title: 'Правило 3-3-3', sub: 'Простое правило похудения', tone: '#EBE0D0', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { type: 'tip', title: 'Как читать состав', sub: 'Полезный совет', tone: '#F1E8DB', href: 'https://www.instagram.com/katy_konnova/', img: '' },
-    { type: 'reel', title: 'Волосы — маркер здоровья', sub: 'Что они говорят о питании', tone: '#DED1BD', href: 'https://www.instagram.com/katy_konnova/', img: '' }
+    { type: 'reel', title: 'Попкорн полезнее салата!', sub: 'Разбор в супермаркете', tone: '#E8DBC8', href: 'https://www.instagram.com/reel/DfnBWvXqJrd/', img: 'assets/reels/popcorn.jpg' },
+    { type: 'reel', title: 'Бюджетные источники белка', sub: 'Которые не уступают стейку', tone: '#F1E8DB', href: 'https://www.instagram.com/reel/Dfb7Ld3qKgD/', img: 'assets/reels/protein.jpg' },
+    { type: 'reel', title: 'Правило похудения 3-3-3', sub: 'Простое правило', tone: '#E2D4BF', href: 'https://www.instagram.com/reel/DfXT5fINv7F/', img: 'assets/reels/rule-333.jpg' },
+    { type: 'reel', title: 'ПП для бедных', sub: 'Рубрика', tone: '#EAE0D2', href: 'https://www.instagram.com/reel/DerhfWuNbjC/', img: 'assets/reels/pp-budget.jpg' },
+    { type: 'reel', title: 'Дешманские продукты с богатым составом', sub: 'Разбор в супермаркете', tone: '#EBE0D0', href: 'https://www.instagram.com/reel/DfCqbejtKOL/', img: 'assets/reels/cheap-products.jpg' },
+    { type: 'reel', title: 'Трендовый завтрак', sub: 'Рецепт', tone: '#DED1BD', href: 'https://www.instagram.com/reel/DclmRI1qAH4/', img: 'assets/reels/breakfast.jpg' }
   ],
 
   // Добавки. Каждая запись — отдельный блок в разделе «Добавки»; чтобы добавить

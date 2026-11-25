@@ -274,17 +274,18 @@
       var href = r.href || 'https://www.instagram.com/katy_konnova/';
       var type = TYPES[r.type] ? r.type : 'reel';
       return '' +
-        '<a href="' + esc(href) + '"' + linkAttrs(href) + ' class="kk-car-card" style="background: ' + esc(r.tone || '#E8DBC8') + '">' +
+        '<a href="' + esc(href) + '"' + linkAttrs(href) + ' class="kk-car-card' + (r.img ? ' has-cover' : '') + '"' + (r.img ? ' aria-label="' + esc(TYPES[type] + ': ' + r.title) + '"' : '') + ' style="background: ' + esc(r.tone || '#E8DBC8') + '">' +
         (r.img ? '<img src="' + esc(r.img) + '" alt="" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block">' : '') +
         '<span style="position: relative; display: flex; justify-content: space-between; align-items: center">' +
         '<span class="kk-glass" style="border-radius: 999px; padding: 6px 13px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent)">' + TYPES[type] + '</span>' +
         (type === 'reel' ? '<span class="kk-glass" aria-hidden="true" style="width: 44px; height: 44px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center"><svg viewBox="0 0 24 24" width="16" height="16" fill="var(--accent)"><path d="M8 5.5v13l10.5-6.5z"></path></svg></span>' : '') +
         '</span>' +
         (r.img ? '' : '<span style="font-size: 12px; color: #6E6258; text-align: center">Обложка</span>') +
+        (r.img ? '' :
         '<span class="kk-glass" style="position: relative; border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">' +
         '<span style="font-family: ' + SERIF + '; font-size: 23px; font-weight: 500; line-height: 1.1">' + esc(r.title) + '</span>' +
         '<span style="font-size: 13px; color: #6E6258">' + esc(r.sub) + '</span>' +
-        '</span>' +
+        '</span>') +
         '</a>';
     }).join('');
 
@@ -530,7 +531,7 @@
       var ph = k.photos || [];
       return '<div class="kk-res-card kk-lift" style="background: #FFFFFF; border-radius: 28px; padding: 14px 14px 22px; display: flex; flex-direction: column; gap: 12px">' +
         (k.image
-          ? '<a class="kk-case-img' + (k.kind === 'photo' ? ' is-photo' : '') + '" href="' + esc(k.image) + '" target="_blank" rel="noopener" aria-label="' + (k.kind === 'photo' ? 'Фото' : 'Отзыв') + ': ' + esc(k.name) + ' — открыть целиком"><img src="' + esc(k.image) + '" alt="' + (k.kind === 'photo' ? 'Фото: ' : 'Отзыв: ') + esc(k.name) + '" loading="lazy"><span>' + (k.kind === 'photo' ? 'Фото' : 'Отзыв') + '</span></a>'
+          ? '<a class="kk-case-img' + (k.kind === 'photo' ? ' is-photo' : '') + '" href="' + esc(k.image) + '" target="_blank" rel="noopener" aria-label="' + (k.kind === 'photo' ? 'Фото' : 'Отзыв') + ': ' + esc(k.name) + ' — открыть целиком"><img src="' + esc(k.image) + '" alt="' + (k.kind === 'photo' ? 'Фото: ' : 'Отзыв: ') + esc(k.name) + '" loading="lazy"' + (k.pos ? ' style="object-position: ' + esc(k.pos) + '"' : '') + '><span>' + (k.kind === 'photo' ? 'Фото' : 'Отзыв') + '</span></a>'
           : '<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">' + photo(ph[0], 'До', '#EFE6D9', '#6E6258') + photo(ph[1], 'После', '#E6DAC7', '#4A3F36') + '</div>') +
         '<div style="padding: 0 8px; display: flex; flex-direction: column; gap: 6px">' +
         '<span style="font-family: ' + SERIF + '; font-size: 34px; font-weight: 500; line-height: 1; color: var(--accent)">' + esc(k.result) + '</span>' +
@@ -539,7 +540,12 @@
         '<span style="font-size: 14px; line-height: 1.6; color: #6E6258">' + esc(k.text) + '</span>' +
         (k.href ? '<a href="' + esc(k.href) + '"' + linkAttrs(k.href) + ' style="align-self: flex-start; font-size: 14px; font-weight: 600; text-underline-offset: 4px">Читать историю →</a>' : '') +
         '</div></div>';
-    }).join('');
+    }).join('') + (cfg.links && cfg.links.reviews
+      ? '<a class="kk-res-card kk-res-more kk-lift" href="' + esc(cfg.links.reviews) + '"' + linkAttrs(cfg.links.reviews) + '>' +
+        '<span class="kk-res-more-n">' + (cfg.casesMore || 'Ещё больше') + '</span>' +
+        '<span class="kk-res-more-t">историй и отзывов — в Telegram-канале</span>' +
+        '<span class="kk-res-more-a" aria-hidden="true">→</span></a>'
+      : '');
   }
   if (resEl && resEl.children.length) {
     var resBtns = [].slice.call(document.querySelectorAll('[data-results]'));
