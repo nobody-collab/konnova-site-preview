@@ -379,3 +379,34 @@ html{scroll-behavior:smooth}
 .kk-video-next:hover .kk-video-next-a{background:var(--accent);border-color:var(--accent);color:#FFFFFF}
 @keyframes kk-nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 @media (prefers-reduced-motion: reduce){.kk-video-next-a{animation:none}}
+
+/* Блок теста: ровно две колонки (видео над ними на всю ширину) */
+.kk-iron-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+@media (max-width:760px){.kk-iron-grid{grid-template-columns:minmax(0,1fr)!important}}
+
+/* ---------- Чек-лист анализов ---------- */
+.kk-check{display:flex;flex-direction:column;gap:12px}
+.kk-check h4{margin:10px 0 0;font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:#3F352D}
+.kk-check-list{margin:0;padding:0;list-style:none;counter-reset:kkc;display:flex;flex-direction:column;gap:8px}
+.kk-check-list li{counter-increment:kkc;position:relative;display:flex;flex-direction:column;gap:2px;padding:12px 14px 12px 50px;background:#FFFFFF;border-radius:16px}
+.kk-check-list li::before{content:counter(kkc);position:absolute;left:14px;top:12px;width:24px;height:24px;border-radius:999px;border:1px solid var(--accent);color:var(--accent);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.kk-check-list b{font-size:16px;font-weight:600;color:#3F352D}
+.kk-check-list span{font-size:14px;line-height:1.55;color:#6E6258}
+.kk-check-how{margin:0;padding:0 0 0 20px;display:flex;flex-direction:column;gap:6px;font-size:15px;line-height:1.55;color:#6E6258}
+.kk-modal-more .kk-check-note{font-size:13px;color:#9C8878}
+.kk-more-btn{border:0;cursor:pointer;font-family:inherit}
+@media print{
+  .kk-modal-open body>*:not(.kk-modal){display:none!important}
+  .kk-modal{position:static!important;background:none!important;backdrop-filter:none!important;padding:0!important;overflow:visible!important}
+  .kk-modal-panel{box-shadow:none!important;max-width:none!important}
+  .kk-modal-close,.kk-modal-alt,.kk-check-actions{display:none!important}
+  .kk-check-list li{border:1px solid #E5D9C8;break-inside:avoid}
+}
+/* Видео — тёмная карточка под тестом */
+.kk-video.kk-on-dark{background:#2A231E;margin-top:8px}
+.kk-video.kk-on-dark .kk-eyebrow{color:#B9A58F}
+.kk-video.kk-on-dark .kk-eyebrow>span{background:#6E6258}
+.kk-video.kk-on-dark a{color:#DCC3A4}
+.kk-video.kk-on-dark .kk-yt{box-shadow:0 20px 50px rgba(0,0,0,.35)}
+#kk-iron-video{scroll-margin-top:96px}
+.kk-video.kk-on-dark .kk-yt-play{color:#2A231E}

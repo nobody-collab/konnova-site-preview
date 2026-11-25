@@ -454,7 +454,10 @@
     var answers = {};
 
     var stepLink = function (href, label, primary) {
-      return '<a href="' + esc(href || '#iron-test') + '"' + linkAttrs(href || '') + ' style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 6px 22px; border-radius: 18px; background: ' + (primary ? 'var(--accent)' : '#FFFFFF') + '; color: ' + (primary ? '#FFFFFF' : '#4A3F36') + '; text-decoration: none; font-family: ' + SERIF + '; font-size: 21px; font-weight: 500">' + esc(label) +
+      // 'more:id' — открыть окно «Подробнее» (шаблон kk-more-id) вместо перехода
+      var more = /^more:/.test(href || '') ? href.slice(5) : '';
+      var attrs = more ? 'href="#iron-test" data-more="' + esc(more) + '" aria-haspopup="dialog"' : 'href="' + esc(href || '#iron-test') + '"' + linkAttrs(href || '');
+      return '<a ' + attrs + ' style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 6px 22px; border-radius: 18px; background: ' + (primary ? 'var(--accent)' : '#FFFFFF') + '; color: ' + (primary ? '#FFFFFF' : '#4A3F36') + '; text-decoration: none; font-family: ' + SERIF + '; font-size: 21px; font-weight: 500">' + esc(label) +
         ' <span aria-hidden="true" style="font-family: \'Manrope\', sans-serif; font-size: 16px' + (primary ? '' : '; color: var(--accent)') + '">→</span></a>';
     };
 
@@ -480,7 +483,7 @@
       '<span data-part="title" style="font-family: ' + SERIF + '; font-size: 38px; font-weight: 500; line-height: 1.1; color: #3F352D"></span>' +
       '<span data-part="text" style="font-size: 16px; line-height: 1.7; color: #6E6258"></span>' +
       '<div style="display: flex; flex-direction: column; gap: 10px; padding-top: 6px">' +
-      stepLink(links.analyses, 'Какие анализы сдать', false) +
+      stepLink(links.analyses, 'Чек-лист: какие анализы сдать', false) +
       stepLink(links.video, 'Видео: почему важно железо', false) +
       stepLink(links.buy || '#iron', texts.ironCta, true) +
       '</div>' +
@@ -705,5 +708,10 @@
     f.className = 'kk-yt-frame';
     b.replaceWith(f);
     f.focus();
+  });
+
+  // «Сохранить или распечатать» в окне: печатается только содержимое окна
+  document.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('[data-print]')) { window.print(); }
   });
 })();
