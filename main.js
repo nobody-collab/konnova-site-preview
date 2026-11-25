@@ -70,29 +70,68 @@
     root.classList.remove('kk-modal-open');
     if (modalLast) { modalLast.focus(); }
   }
+  function ensureModal() {
+    if (modal) { return modal; }
+    modal = document.createElement('div');
+    modal.className = 'kk-modal';
+    modal.hidden = true;
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.innerHTML = '<div class="kk-modal-panel"><div class="kk-modal-head"><span class="kk-modal-title"></span>' +
+      '<button type="button" class="kk-modal-close" aria-label="Закрыть">×</button></div>' +
+      '<div class="kk-modal-body"></div><a class="kk-modal-alt" target="_blank" rel="noopener">Не открывается? Открыть форму в новой вкладке ↗</a></div>';
+    document.body.appendChild(modal);
+    modal.addEventListener('click', function (e) { if (e.target === modal || e.target.closest('.kk-modal-close')) { closeModal(); } });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeModal(); } });
+    return modal;
+  }
+  // показать в окне один из блоков (data-widget = key); trigger — кнопка, на которую вернуть фокус
+  function showModal(key, title, trigger) {
+    modal.setAttribute('aria-label', title || '');
+    modal.querySelector('.kk-modal-title').textContent = title || '';
+    Array.prototype.forEach.call(modal.querySelector('.kk-modal-body').children, function (ch) { ch.hidden = ch.getAttribute('data-widget') !== key; });
+    // переход из окна «Подробнее» в анкету: фокус потом вернуть на исходную кнопку на странице
+    if (!(trigger && modal.contains(trigger))) { modalLast = trigger || null; }
+    modal.hidden = false;
+    modal.scrollTop = 0;
+    root.classList.add('kk-modal-open');
+    modal.querySelector('.kk-modal-close').focus();
+  }
+  /* «Подробнее»: <button data-more="id"> открывает <template id="kk-more-id" data-title="…"> */
+  function openMore(id, trigger) {
+    var tpl = document.getElementById('kk-more-' + id);
+    if (!tpl) { return; }
+    ensureModal();
+    var key = 'more:' + id;
+    var body = modal.querySelector('.kk-modal-body');
+    if (!body.querySelector('[data-widget="' + key + '"]')) {
+      var box = document.createElement('div');
+      box.setAttribute('data-widget', key);
+      box.className = 'kk-modal-more';
+      box.appendChild(tpl.content.cloneNode(true));
+      [].forEach.call(box.querySelectorAll('[data-link]'), function (el) {
+        var url = (cfg.links || {})[el.getAttribute('data-link')];
+        if (url) { el.setAttribute('href', url); if (/^https?:/.test(url)) { el.setAttribute('target', '_blank'); el.setAttribute('rel', 'noopener'); } }
+      });
+      body.appendChild(box);
+    }
+    modal.querySelector('.kk-modal-alt').hidden = true;
+    showModal(key, tpl.getAttribute('data-title'), trigger);
+  }
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest ? e.target.closest('[data-more]') : null;
+    if (!el) { return; }
+    e.preventDefault();
+    openMore(el.getAttribute('data-more'), el);
+  });
   function openWidget(key, trigger) {
     var w = (cfg.widgets || {})[key];
-    if (!modal) {
-      modal = document.createElement('div');
-      modal.className = 'kk-modal';
-      modal.hidden = true;
-      modal.setAttribute('role', 'dialog');
-      modal.setAttribute('aria-modal', 'true');
-      modal.innerHTML = '<div class="kk-modal-panel"><div class="kk-modal-head"><span class="kk-modal-title"></span>' +
-        '<button type="button" class="kk-modal-close" aria-label="Закрыть">×</button></div>' +
-        '<div class="kk-modal-body"></div><a class="kk-modal-alt" target="_blank" rel="noopener">Не открывается? Открыть форму в новой вкладке ↗</a></div>';
-      document.body.appendChild(modal);
-      modal.addEventListener('click', function (e) { if (e.target === modal || e.target.closest('.kk-modal-close')) { closeModal(); } });
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeModal(); } });
-    }
-    modal.setAttribute('aria-label', w.title || '');
-    modal.querySelector('.kk-modal-title').textContent = w.title || '';
+    ensureModal();
     var alt = modal.querySelector('.kk-modal-alt');
     var url = (cfg.links || {})[key];
     alt.hidden = !url;
     if (url) { alt.href = url; }
     var body = modal.querySelector('.kk-modal-body');
-    Array.prototype.forEach.call(body.children, function (ch) { ch.hidden = ch.getAttribute('data-widget') !== key; });
     if (!modalLoaded[key]) {
       modalLoaded[key] = true;
       var box = document.createElement('div');
@@ -119,10 +158,17 @@
       s.onload = function () { document.dispatchEvent(new Event('StartWidget' + w.id)); };
       box.appendChild(s);
     }
-    modalLast = trigger || null;
-    modal.hidden = false;
-    root.classList.add('kk-modal-open');
-    modal.querySelector('.kk-modal-close').focus();
+    showModal(key, w.title, trigger);
+  }
+
+  /* ---------- Марафон: дни появляются по очереди ---------- */
+  var days = document.querySelector('.kk-days');
+  if (days && 'IntersectionObserver' in window && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    days.classList.add('kk-seq-ready');
+    var seqIo = new IntersectionObserver(function (en) {
+      if (en.some(function (x) { return x.isIntersecting; })) { days.classList.add('is-in'); seqIo.disconnect(); }
+    }, { threshold: 0.35 });
+    seqIo.observe(days);
   }
   document.addEventListener('click', function (e) {
     var el = e.target.closest ? e.target.closest('[data-link]') : null;
