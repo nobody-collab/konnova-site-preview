@@ -581,6 +581,7 @@
       return '<div class="kk-res-card kk-lift" style="background: #FFFFFF; border-radius: 28px; padding: 14px 14px 22px; display: flex; flex-direction: column; gap: 12px">' +
         (k.image
           ? '<a class="kk-case-img' + (k.kind === 'photo' ? ' is-photo' : '') + '" href="' + esc(k.image) + '" target="_blank" rel="noopener" aria-label="' + (k.kind === 'photo' ? 'Фото' : 'Отзыв') + ': ' + esc(k.name) + ' — открыть целиком"><img src="' + esc(k.image) + '" alt="' + (k.kind === 'photo' ? 'Фото: ' : 'Отзыв: ') + esc(k.name) + '" loading="lazy"' + (k.pos ? ' style="object-position: ' + esc(k.pos) + '"' : '') + '><span>' + (k.kind === 'photo' ? 'Фото' : 'Отзыв') + '</span></a>'
+          : k.quote ? '<div class="kk-case-quote"><span aria-hidden="true">«</span><p>' + esc(k.quote) + '</p></div>'
           : '<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">' + photo(ph[0], 'До', '#EFE6D9', '#6E6258') + photo(ph[1], 'После', '#E6DAC7', '#4A3F36') + '</div>') +
         '<div style="padding: 0 8px; display: flex; flex-direction: column; gap: 6px">' +
         '<span style="font-family: ' + SERIF + '; font-size: 34px; font-weight: 500; line-height: 1; color: var(--accent)">' + esc(k.result) + '</span>' +

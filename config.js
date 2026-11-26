@@ -19,8 +19,8 @@ window.SITE_CONFIG = {
     marathonForm: 'https://katy-konnova.ru/Anketa_marafon',
     // Лист ожидания книги в GetCourse (страница Алёны) — запасной адрес для окна
     bookWaitlist: 'https://katy-konnova.ru/kniga',
-    // Где лежит гайд «Чекап 35+» для читательниц. [Уточнить у команды: канал и пост]
-    readersGift: 'https://t.me/katy_konnova',
+    // Пост с гайдом «Чекап 30+: энергия, стройность, красота».
+    readersGift: 'https://t.me/katy_konnova/2149',
     // Канал с отзывами и кейсами — кнопка «Ещё больше отзывов» под лентой «Результатов»
     reviews: 'https://t.me/konnovacase'
   },
@@ -28,15 +28,15 @@ window.SITE_CONFIG = {
   // Лента «Результаты». result — крупная цифра; image — фото или скриншот отзыва, kind: 'photo' | 'review';
   // photos — пара [до, после] вместо image; href — ссылка на историю
   cases: [
-    { name: 'Наша семья', program: '', result: '13 лет', text: 'Путь длиной в 13 лет. Мой проект помог выйти из вечного круга диет и закрепить результат.', href: '', image: 'assets/cases/family.jpg', kind: 'photo', pos: '50% 20%', photos: [] },
+    { name: 'Мария, 44', program: '', result: '−22 кг', text: 'За полгода. Трижды худела на 20–35 кг и трижды набирала обратно — теперь знает, как удержать результат.', href: 'https://t.me/konnovacase/87', image: '', kind: 'review', quote: 'Мария прекрасно знала, как худеть, но не знала, как потом не набирать вес', photos: [] },
+    { name: 'Ольга, 44 и Георгий, 42', program: 'PRO Стройность', result: '−15,8 кг', text: 'На двоих за два месяца. После 13 лет попыток похудеть.', href: 'https://t.me/konnovacase/86', image: 'assets/cases/family.jpg', kind: 'photo', pos: '50% 20%', photos: [] },
     { name: 'Анастасия, 34', program: 'Марафон и PRO Стройность', result: '−6,4 кг', text: 'Не хотела смотреть в зеркало. После программы — ещё −2 кг.', href: 'https://t.me/konnovacase/58', image: 'assets/cases/anastasia-34.jpg', kind: 'review', photos: [] },
-    { name: 'Ольга, 44 и Георгий, 42', program: 'Марафон и PRO Стройность', result: '−5,3 и −10,5 кг', text: 'Муж и жена — худели вместе.', href: '', image: 'assets/cases/olga-georgiy.jpg', kind: 'photo', photos: [] },
-    { name: 'Любовь, 68', program: 'Марафон и PRO Стройность', result: '−9 кг', text: 'За одну программу. За две — −13,6 кг.', href: '', image: 'assets/cases/lyubov-68.jpg', kind: 'review', photos: [] },
+    { name: 'Любовь, 68', program: 'Марафон и PRO Стройность', result: '−9 кг', text: 'За одну программу. За две — −13,6 кг.', href: 'https://t.me/konnovacase/81', image: 'assets/cases/lyubov-68.jpg', kind: 'review', photos: [] },
     { name: 'Ольга, 47', program: 'PRO Стройность', result: '−10,6 кг', text: 'С инсулинорезистентностью.', href: 'https://t.me/konnovacase/34', image: 'assets/cases/olga-47.jpg', kind: 'review', photos: [] },
     { name: 'Аня, 31', program: 'Марафон и PRO Стройность', result: '−8 кг', text: 'Никогда не могла сидеть на диетах.', href: 'https://t.me/konnovacase/26', image: 'assets/cases/anya-31.jpg', kind: 'review', photos: [] },
     { name: 'Анна', program: 'Охуденный марафон', result: '−10 кг', text: 'За 3 месяца после марафона — только на его знаниях.', href: '', image: 'assets/cases/anna.jpg', kind: 'review', photos: [] },
     { name: 'Таисия', program: 'Охуденный марафон', result: '−5,5 кг', text: 'Только марафон.', href: '', image: 'assets/cases/taisiya.jpg', kind: 'review', photos: [] },
-    { name: 'Анастасия, 40', program: '', result: '−5,4 кг', text: 'Мама пятерых детей. Похудела в пост.', href: '', image: 'assets/cases/anastasia-40.jpg', kind: 'review', photos: [] }
+    { name: 'Анастасия, 40', program: 'PRO Стройность', result: '−5,4 кг', text: 'Мама пятерых детей. Похудела в Великий пост, −12 см в талии.', href: 'https://t.me/konnovacase/82', image: 'assets/cases/anastasia-40.jpg', kind: 'review', photos: [] }
   ],
 
   // Лента «Разборы» из Google Таблицы (опубликованной как CSV). Пусто — берётся список reels ниже.

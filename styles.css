@@ -413,3 +413,6 @@ html{scroll-behavior:smooth}
 /* Кнопка запуска — в свободном углу обложки, не поверх надписи */
 .kk-video .kk-yt-play{left:auto;top:auto;margin:0;left:6%;bottom:9%}
 @media (max-width:760px){.kk-video .kk-yt-play{left:5%;bottom:8%;width:52px;height:52px}}
+.kk-case-quote{position:relative;aspect-ratio:4/3;border-radius:18px;background:var(--accent);color:#FBF8F3;padding:22px 22px 20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.kk-case-quote span{position:absolute;top:-18px;left:14px;font-family:'Cormorant Garamond',Georgia,serif;font-size:120px;line-height:1;opacity:.28}
+.kk-case-quote p{margin:0;font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(21px,2vw,28px);line-height:1.22;font-style:italic}
