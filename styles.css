@@ -410,3 +410,6 @@ html{scroll-behavior:smooth}
 .kk-video.kk-on-dark .kk-yt{box-shadow:0 20px 50px rgba(0,0,0,.35)}
 #kk-iron-video{scroll-margin-top:96px}
 .kk-video.kk-on-dark .kk-yt-play{color:#2A231E}
+/* Кнопка запуска — в свободном углу обложки, не поверх надписи */
+.kk-video .kk-yt-play{left:auto;top:auto;margin:0;left:6%;bottom:9%}
+@media (max-width:760px){.kk-video .kk-yt-play{left:5%;bottom:8%;width:52px;height:52px}}
